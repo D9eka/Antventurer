@@ -71,6 +71,7 @@ namespace Creatures
             _rigidbody.velocity = new Vector2(xVelocity, _rigidbody.velocity.y);
 
             Jump();
+
             if (_allowWallJump)
             {
                 MoveOnWall();
@@ -102,26 +103,33 @@ namespace Creatures
 
         private void Jump()
         {
-            if (_isGrounded && _direction.y > 0)
+            bool isJumpKeyPressed = _direction.y > 0;
+
+            if (_isGrounded && isJumpKeyPressed)
             {
                 _isJumping = true;
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
-            }
-
-            else if (_isJumping && _direction.y > 0 && _jumpTimeCounter > 0)
-            {
                 _jumpTimeCounter -= Time.fixedDeltaTime;
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
             }
 
-            else if (_haveDoubleJump &&
-               _isJumping && _direction.y > 0 && _jumpTimeCounter <= 0)
+            else if (_isJumping && isJumpKeyPressed && _jumpTimeCounter > 0)
             {
-                Debug.Log("Double");
-                _haveDoubleJump = false;
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _doubleJumpForce);
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
+                _jumpTimeCounter -= Time.fixedDeltaTime;
             }
-            else
+
+            else if (_isJumping && !isJumpKeyPressed && _rigidbody.velocity.y < 0)
+            {
+                _jumpTimeCounter = 0;
+            }
+
+            else if (_isJumping && isJumpKeyPressed && _haveDoubleJump)
+            {
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _doubleJumpForce);
+                _haveDoubleJump = false;
+            }
+
+            else if(_isGrounded)
             {
                 _isJumping = false;
                 _jumpTimeCounter = _maxJumpTime;
