@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 3196750406398038027}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -264,16 +264,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _invertScale: 0
   _speed: 5
-  JumpForce: 5.5
-  MaxJumpTime: 0.5
+  _jumpForce: 5.1
+  _maxJumpTime: 0.5
   GroundLayer:
     serializedVersion: 2
     m_Bits: 64
-  _groundCheck: {fileID: 7406092047943257908}
+  GroundCheck: {fileID: 7406092047943257908}
   _wallCheck: {fileID: 7853898666500079016}
   _interactionCheck: {fileID: 5722433154154497295}
   _allowDoubleJump: 0
   _doubleJumpForce: 8.5
+  _slideSpeed: -2.5
+  _allowWallJump: 0
+  _jumpWallAngle: {x: -3.5, y: 7}
+  _jumpWallTime: 0.5
 --- !u!114 &5406846494489651497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,6 +364,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 984e6f7a-1df4-422e-86bc-5652f3999014
     m_ActionName: Player/ChangeDoubleJumpState[/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5406846494489651497}
+        m_TargetAssemblyTypeName: Creatures.PlayerInputReader, Assembly-CSharp
+        m_MethodName: OnChangeWallJumpState
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c0864031-f7bf-481f-89e5-002b70704e12
+    m_ActionName: Player/ChangeWallJumpState[/Keyboard/c]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -401,7 +421,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 2751624361626239033}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 362b4356a430c524297712ce0625a2a7, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -424,7 +444,7 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.22}
+  m_Offset: {x: 0, y: -0.2}
   m_Size: {x: 0.67, y: 1.1}
   m_Direction: 0
 --- !u!1 &4984753505289885355

@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
-using Extensions;
 
 namespace Components.ColliderBased
 {
@@ -13,9 +11,9 @@ namespace Components.ColliderBased
         [SerializeField] private LayerMask _mask;
         [SerializeField] private string[] _tags;
         [SerializeField] private OnOverlapEvent _onOverlap;
-        
+
         private readonly Collider2D[] _interactionResult = new Collider2D[10];
-        
+
         public void Check()
         {
             var size = Physics2D.OverlapCircleNonAlloc(

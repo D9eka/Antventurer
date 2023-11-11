@@ -6,8 +6,7 @@ namespace XYZ.Components.Interactables
     {
         public void DoInteraction(GameObject go)
         {
-            var interactable = go.GetComponent<InteractableComponent>();
-            if (interactable != null)
+            if (go.TryGetComponent<InteractableComponent>(out var interactable))
                 interactable.Interact();
         }
     }
