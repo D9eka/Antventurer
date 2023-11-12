@@ -1,13 +1,12 @@
 ﻿using UnityEngine;
 
-namespace XYZ.Components.Interactables
+namespace Components.Interactables
 {
     public class DoInteractionComponent : MonoBehaviour
     {
         public void DoInteraction(GameObject go)
         {
-            var interactable = go.GetComponent<InteractableComponent>();
-            if (interactable != null)
+            if (go.TryGetComponent<InteractableComponent>(out var interactable))
                 interactable.Interact();
         }
     }

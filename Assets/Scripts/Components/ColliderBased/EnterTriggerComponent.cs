@@ -1,5 +1,5 @@
-using UnityEngine;
 using Extensions;
+using UnityEngine;
 
 namespace Components.ColliderBased
 {
@@ -16,7 +16,7 @@ namespace Components.ColliderBased
 
             if (!string.IsNullOrEmpty(_tag) && !other.gameObject.CompareTag(_tag))
                 return;
-            
+
             _action?.Invoke(other.gameObject);
         }
     }
