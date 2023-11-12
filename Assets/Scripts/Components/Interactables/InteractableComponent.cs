@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace XYZ.Components.Interactables
+namespace Components.Interactables
 {
     public class InteractableComponent : MonoBehaviour
     {

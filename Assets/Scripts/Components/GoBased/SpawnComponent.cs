@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace XYZ.Components.GoBased
+namespace Components.GoBased
 {
     public class SpawnComponent : MonoBehaviour
     {

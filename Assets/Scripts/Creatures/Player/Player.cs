@@ -1,4 +1,5 @@
 using Components.ColliderBased;
+using Components.Mana;
 using UnityEngine;
 
 namespace Creatures
@@ -21,16 +22,20 @@ namespace Creatures
         [Header("Double Jump")]
         [SerializeField] private bool _allowDoubleJump;
         [SerializeField] private float _doubleJumpForce;
+        [SerializeField] private int _doubleJumpManaExpense;
 
         [Header("Wall Jump")]
         [SerializeField] private float _slideSpeed;
         [SerializeField] private bool _allowWallJump;
         [SerializeField] private Vector2 _jumpWallAngle;
         [SerializeField] private float _jumpWallTime;
+        [SerializeField] private int _wallJumpManaExpense;
 
         private Rigidbody2D _rigidbody;
-        private Vector2 _direction;
         private Animator _animator;
+        private ManaComponent _mana;
+
+        private Vector2 _direction;
         private bool _isGrounded;
         private bool _isJumping;
         private float _jumpTimeCounter;
@@ -53,6 +58,7 @@ namespace Creatures
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
+            _mana = GetComponent<ManaComponent>();
 
             _defaultGravityScale = _rigidbody.gravityScale;
             _jumpWallTimeCounter = _jumpWallTime;
@@ -120,6 +126,7 @@ namespace Creatures
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _doubleJumpForce);
                 _haveDoubleJump = false;
                 _madeDoubleJump = true;
+                _mana.ModifyMana(_doubleJumpManaExpense);
                 Debug.Log("Double");
                 return;
             }
@@ -162,6 +169,7 @@ namespace Creatures
                 _rigidbody.velocity = new Vector2(0, 0);
                 _rigidbody.velocity = new Vector2(transform.localScale.x * _jumpWallAngle.x, _jumpWallAngle.y);
                 _isJumping = true;
+                _mana.ModifyMana(_wallJumpManaExpense);
             }
             if (_blockXMovement && (_jumpWallTimeCounter -= Time.fixedDeltaTime) <= 0)
             {
