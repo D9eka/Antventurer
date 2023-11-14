@@ -37,7 +37,6 @@ namespace Creatures
 
         private Vector2 _direction;
         private bool _isGrounded;
-        private bool _isJumping;
         private float _jumpTimeCounter;
 
         private bool _isOnWall;
@@ -106,38 +105,35 @@ namespace Creatures
         {
             bool isJumpKeyPressed = _direction.y > 0;
 
-            if (_isGrounded && isJumpKeyPressed)
+            if (_isGrounded)
             {
-                _isJumping = true;
                 _jumpTimeCounter = _maxJumpTime;
-                _madeDoubleJump = false;
-                _haveDoubleJump = false;
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
+                _madeDoubleJump = _haveDoubleJump = false;
+                if(isJumpKeyPressed)
+                {
+                    _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
+                }
                 return;
             }
-            if (_isJumping && isJumpKeyPressed && _jumpTimeCounter > 0)
+            if (!_isGrounded && !isJumpKeyPressed)
+            {
+                _jumpTimeCounter = 0;
+                _haveDoubleJump = _allowDoubleJump && !_madeDoubleJump;
+                return;
+            }
+            if (!_isGrounded && isJumpKeyPressed && _jumpTimeCounter > 0)
             {
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
                 _jumpTimeCounter -= Time.deltaTime;
                 return;
             }
-            if (_isJumping && _haveDoubleJump && isJumpKeyPressed)
+            if (!_isGrounded && isJumpKeyPressed && _haveDoubleJump)
             {
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _doubleJumpForce);
                 _haveDoubleJump = false;
                 _madeDoubleJump = true;
                 _mana.ModifyMana(_doubleJumpManaExpense);
                 Debug.Log("Double");
-                return;
-            }
-            if (_isGrounded)
-            {
-                _isJumping = false;
-            }
-            if (_isJumping && !isJumpKeyPressed)
-            {
-                _jumpTimeCounter = 0;
-                _haveDoubleJump = _allowDoubleJump && !_madeDoubleJump;
                 return;
             }
         }
@@ -168,8 +164,7 @@ namespace Creatures
                 _rigidbody.gravityScale = _defaultGravityScale;
                 _rigidbody.velocity = new Vector2(0, 0);
                 _rigidbody.velocity = new Vector2(transform.localScale.x * _jumpWallAngle.x, _jumpWallAngle.y);
-                _isJumping = true;
-                _mana.ModifyMana(_wallJumpManaExpense);
+                //_mana.ModifyMana(_wallJumpManaExpense);
             }
             if (_blockXMovement && (_jumpWallTimeCounter -= Time.fixedDeltaTime) <= 0)
             {
