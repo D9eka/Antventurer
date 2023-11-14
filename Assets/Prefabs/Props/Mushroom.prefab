@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 2072320217206345587}
   - component: {fileID: 540013616072357134}
   - component: {fileID: 4716255053683414513}
-  - component: {fileID: 4314736247096795702}
   - component: {fileID: -2876856748457678196}
   - component: {fileID: 4282945517315028043}
   m_Layer: 6
-  m_Name: Coin
+  m_Name: Mushroom
   m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.529253, y: -0.34, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 664114686, guid: 617fd08443a8ad76881a0987eb5940d9, type: 3}
+  m_Sprite: {fileID: -161152519, guid: 020f59b9fefc5a043b8bdfc89909b2aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,28 +121,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
---- !u!95 &4314736247096795702
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 599290854687163881}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0df60fe5c947c7444a38722e8206ce1c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_Radius: 0.38
 --- !u!114 &-2876856748457678196
 MonoBehaviour:
   m_ObjectHideFlags: 0
