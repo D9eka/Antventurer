@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace XYZ.Components.Interactables
+namespace Components.Interactables
 {
     public class SwitchComponent : MonoBehaviour
     {

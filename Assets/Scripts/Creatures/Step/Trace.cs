@@ -9,7 +9,7 @@ public class CreateSpriteOnCollision : MonoBehaviour
     public GameObject footStep;
     public string sortingLayerName;
     public int sortingOrder = 0;
-    public float footStepTimer = 0.2f;
+    public float footStepTimer = 0.1f;
 
     private float timer;
     private bool _isGrounded;
@@ -37,6 +37,7 @@ public class CreateSpriteOnCollision : MonoBehaviour
                 }
             } else
             {
+                CreateSprite(groundPosition);
                 timer += Time.deltaTime;
                 if (timer > 5)
                 {

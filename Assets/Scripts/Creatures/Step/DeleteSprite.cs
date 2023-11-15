@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DeleteSprite : MonoBehaviour
 {
-    public float displayTimer;
+    public float displayTimer = 5f;
     public float timer;
 
     void Update()

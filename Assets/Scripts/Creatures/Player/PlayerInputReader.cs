@@ -8,14 +8,14 @@ namespace Creatures
         [SerializeField] private Player _player;
 
         public void OnMove(InputAction.CallbackContext context)
-        { 
+        {
             var direction = context.ReadValue<Vector2>();
             _player.SetDirection(direction);
         }
 
         public void OnInteract(InputAction.CallbackContext context)
         {
-            if(context.canceled)
+            if (context.canceled)
                 _player.Interact();
         }
 
