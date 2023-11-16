@@ -1,11 +1,18 @@
 using Components.ColliderBased;
 using Components.Mana;
+using System;
 using UnityEngine;
 
-namespace Creatures
+namespace Creatures.Player
 {
     public class Player : MonoBehaviour
     {
+        public EventHandler<OnPlayerGroundedEventArgs> OnPlayerGrounded;
+        public class OnPlayerGroundedEventArgs : EventArgs
+        {
+            public Vector2 position;
+        }
+
         [Header("Params")]
         [SerializeField] private bool _invertScale;
         [SerializeField] private float _speed;
@@ -15,7 +22,9 @@ namespace Creatures
 
         [Header("Checkers")]
         [SerializeField] private LayerMask GroundLayer;
-        [SerializeField] private LayerCheck GroundCheck;
+        [SerializeField] private LayerCheck GroundCheckLeft;
+        [SerializeField] private LayerCheck GroundCheckCenter;
+        [SerializeField] private LayerCheck GroundCheckRight;
         [SerializeField] private LayerCheck _wallCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
 
@@ -53,8 +62,17 @@ namespace Creatures
         private const string VERTICAL_VELOCITY_KEY = "vertical-velocity";
         private const string IS_ON_WALL_KEY = "is-on-wall";
 
+        public static Player Instance { get; private set; }
+
         private void Awake()
         {
+            if (Instance != null)
+            {
+                Destroy(Instance);
+                return;
+            }
+            Instance = this;
+
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
             _mana = GetComponent<ManaComponent>();
@@ -65,7 +83,13 @@ namespace Creatures
 
         private void Update()
         {
-            _isGrounded = GroundCheck.IsTouchingLayer;
+            _isGrounded = GroundCheckCenter.IsTouchingLayer;
+            bool isFullyGrounded = GroundCheckLeft.IsTouchingLayer && GroundCheckCenter.IsTouchingLayer && GroundCheckRight.IsTouchingLayer;
+            if (isFullyGrounded)
+                OnPlayerGrounded?.Invoke(this, new OnPlayerGroundedEventArgs
+                {
+                    position = transform.position
+                });
 
             var xVelocity = _blockXMovement ? _rigidbody.velocity.x : _direction.x * _speed;
             _rigidbody.velocity = new Vector2(xVelocity, _rigidbody.velocity.y);
