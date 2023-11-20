@@ -1,7 +1,5 @@
 using UnityEngine;
 using Creatures.Player;
-using System;
-using Components.ColliderBased;
 using System.Collections.Generic;
 
 public class TraceController : MonoBehaviour
@@ -39,7 +37,7 @@ public class TraceController : MonoBehaviour
         else
         {
             Trace trace = Instantiate(_tracePrefab, new Vector3(tracePosition.x, tracePosition.y),
-                        Quaternion.identity, transform).GetComponent<Trace>();
+                                      Quaternion.identity, transform).GetComponent<Trace>();
             _traces[tracePosition] = trace;
         }
     }
