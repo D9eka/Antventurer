@@ -1,5 +1,7 @@
+using Assets.Scripts.Creatures.Player;
 using Components.ColliderBased;
 using Components.Mana;
+using Components.UI;
 using System;
 using UnityEngine;
 
@@ -7,13 +9,6 @@ namespace Creatures.Player
 {
     public class Player : MonoBehaviour
     {
-        public EventHandler<OnPlayerGroundedEventArgs> OnPlayerGrounded;
-        public class OnPlayerGroundedEventArgs : EventArgs
-        {
-            public Vector2 position;
-        }
-
-        [Header("Params")]
         [SerializeField] private bool _invertScale;
         [SerializeField] private float _speed;
 
@@ -64,21 +59,40 @@ namespace Creatures.Player
 
         public static Player Instance { get; private set; }
 
+        public bool AllowDoubleJump => _allowDoubleJump;
+        public bool AllowWallJump => _allowWallJump;
+
+        public EventHandler<OnPlayerGroundedEventArgs> OnPlayerGrounded;
+        public class OnPlayerGroundedEventArgs : EventArgs
+        {
+            public Vector2 position;
+        }
+
+        public EventHandler<int> OnChangeProgress;
+        public EventHandler OnUnlockDoubleJump;
+
         private void Awake()
         {
             if (Instance != null)
             {
                 Destroy(Instance);
-                return;
             }
             Instance = this;
+
+            if(PlayerPrefsController.TryGetPlayerPosition(out var position))
+            {
+                transform.position = position;
+            }
+
+            _allowDoubleJump = PlayerPrefsController.GetPlayerDoubleJumpState();
+            _allowWallJump = PlayerPrefsController.GetPlayerWallJumpState();
 
             _rigidbody = GetComponent<Rigidbody2D>();
             _animator = GetComponent<Animator>();
             _mana = GetComponent<ManaComponent>();
 
             _defaultGravityScale = _rigidbody.gravityScale;
-            _jumpWallTimeCounter = _jumpWallTime;
+            _jumpWallTimeCounter = _jumpWallTime;            
         }
 
         private void Update()
@@ -209,12 +223,23 @@ namespace Creatures.Player
         {
             _allowDoubleJump = !_allowDoubleJump;
             Debug.Log($"Double Jump is {_allowDoubleJump}");
+            if(_allowDoubleJump) 
+            {
+                OnUnlockDoubleJump?.Invoke(this, EventArgs.Empty);
+                OnChangeProgress?.Invoke(this, 20);
+            }
         }
 
         public void ChangeWallJumpState()
         {
             _allowWallJump = !_allowWallJump;
             Debug.Log($"Wall Jump is {_allowWallJump}");
+
+            if (_allowWallJump)
+            {
+                HUD.Instance.SendMessage("Вы разблокировали прыжок от стены!", 5f);
+                OnChangeProgress?.Invoke(this, 40);
+            }
         }
     }
 }

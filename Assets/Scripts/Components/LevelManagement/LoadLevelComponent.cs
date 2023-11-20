@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Components.UI;
+using Assets.Scripts.Creatures.Player;
 
 namespace Components.LevelManagement
 {
@@ -9,9 +10,24 @@ namespace Components.LevelManagement
     {
         [SerializeField] private string _sceneName;
         [SerializeField] private LoadingScreen _loadingScreen;
+        [Header("Position")]
+        [SerializeField] private bool _havePosition;
+        [SerializeField] private Vector2 _position;
+        [Space]
+        [SerializeField] private bool _cleanPlayerPrefs;
 
         public void Load()
         {
+            if(_havePosition)
+            {
+                PlayerPrefsController.SetPlayerPosition(_position);
+            }
+
+            if (_cleanPlayerPrefs)
+            {
+                PlayerPrefsController.CleanPlayerInfo();
+            }
+
             StartCoroutine(LoadAsync());
         }
 

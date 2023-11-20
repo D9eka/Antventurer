@@ -1,7 +1,10 @@
-﻿using TMPro;
+﻿using Assets.Scripts.Creatures.Player;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using static Creatures.Player.Player;
 
 namespace Components.Mana
 {
@@ -11,35 +14,52 @@ namespace Components.Mana
         [SerializeField] private UnityEvent _onHeal;
         [SerializeField] private UnityEvent _onDamage;
         [SerializeField] private UnityEvent _onDie;
-        [Header("UI")]
-        [SerializeField] private TextMeshProUGUI _text;
-        [SerializeField] private Slider _slider;
 
         private int _mana;
 
+        public EventHandler<OnValueChangeEventArgs> OnValueChange;
+        public class OnValueChangeEventArgs : EventArgs
+        {
+            public int value;
+            public int maxValue;
+        }
+
+        public int Mana => _mana;
+        public int MaxMana => _maxMana;
+
         private void Start()
         {
-            _mana = _maxMana;
-            UpdateUI();
+            if(PlayerPrefsController.TryGetPlayerMana(out var mana)) 
+            { 
+                _mana = mana;
+            }
+            else
+            {
+                _mana = _maxMana;
+            }
+
+            OnValueChange?.Invoke(this, new OnValueChangeEventArgs
+            {
+                value = _mana,
+                maxValue = _maxMana,
+            });
         }
 
         public void ModifyMana(int changeValue)
         {            
             _mana = Mathf.Min(_mana + changeValue, _maxMana);
-            UpdateUI();
-             
-            if(changeValue < 0)
+            OnValueChange?.Invoke(this, new OnValueChangeEventArgs
+            {
+                value = _mana,
+                maxValue = _maxMana,
+            });
+
+            if (changeValue < 0)
                 _onDamage?.Invoke();
             if (_mana <= 0)
                 _onDie?.Invoke();
             if(changeValue > 0)
                 _onHeal?.Invoke();
-        }
-
-        private void UpdateUI()
-        {
-            _text.text = _mana.ToString();
-            _slider.value = _mana / 100.0f; 
         }
     }
 }
