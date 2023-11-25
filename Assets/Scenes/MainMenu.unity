@@ -1174,7 +1174,7 @@ MonoBehaviour:
   _sceneName: Level
   _loadingScreen: {fileID: 1391004699}
   _havePosition: 1
-  _position: {x: 10, y: 2.85}
+  _position: {x: 142.5, y: 0}
   _cleanPlayerPrefs: 0
 --- !u!1 &3568360441838612146
 GameObject:

@@ -557,7 +557,7 @@ Transform:
   m_GameObject: {fileID: 62525713}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 164.7, y: 2.3899999, z: -10}
+  m_LocalPosition: {x: 164.477, y: 2.2649999, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2252,7 +2252,7 @@ Transform:
   m_GameObject: {fileID: 309190404}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 164.7, y: 2.3899999, z: -10}
+  m_LocalPosition: {x: 164.477, y: 2.2649999, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -45285,6 +45285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _tracePrefab: {fileID: 5013821021962033521, guid: 0bb3a957cbfeb9f4e9e6de170e5aad95, type: 3}
   _traceLifetimeSecond: 5
+  _traceOffset: 0.5
 --- !u!4 &1260335083
 Transform:
   m_ObjectHideFlags: 0
@@ -47682,11 +47683,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1438418143245659201, guid: 39634b12cf507f03fa21a94acf02bce0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 164.7
+      value: 164.477
       objectReference: {fileID: 0}
     - target: {fileID: 1438418143245659201, guid: 39634b12cf507f03fa21a94acf02bce0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.11
+      value: -1.235
       objectReference: {fileID: 0}
     - target: {fileID: 1438418143245659201, guid: 39634b12cf507f03fa21a94acf02bce0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -47724,13 +47725,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 7496540423750670161, guid: 39634b12cf507f03fa21a94acf02bce0, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[1].m_Target
-      value: 
-      objectReference: {fileID: 277906499117376626}
-    - target: {fileID: 7496540423750670161, guid: 39634b12cf507f03fa21a94acf02bce0, type: 3}
-      propertyPath: m_ActionEvents.Array.data[4].m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SetActive
+    - target: {fileID: 4239182696783985234, guid: 39634b12cf507f03fa21a94acf02bce0, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -50140,7 +50137,7 @@ PrefabInstance:
       objectReference: {fileID: 9057186937579651640}
     - target: {fileID: 966125003366767837, guid: d47ca2f6719ed214eac169b56734e1b1, type: 3}
       propertyPath: _cleanPlayerPrefs
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1530363177450072561, guid: d47ca2f6719ed214eac169b56734e1b1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -50456,11 +50453,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4563117378812418794, guid: d47ca2f6719ed214eac169b56734e1b1, type: 3}
   m_PrefabInstance: {fileID: 277906499117376624}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &277906499117376626 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8269770873725160731, guid: d47ca2f6719ed214eac169b56734e1b1, type: 3}
-  m_PrefabInstance: {fileID: 277906499117376624}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1160711011577240059
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50620,6 +50612,10 @@ PrefabInstance:
     - target: {fileID: 5575468913109954297, guid: 1d8b090a7da88ef4282d382415b464f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7953685206728705464, guid: 1d8b090a7da88ef4282d382415b464f8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 47.957047
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
