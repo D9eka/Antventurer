@@ -42,6 +42,6 @@ public class Trace : MonoBehaviour
 
     public void UpdateTimer()
     {
-        _timer = TraceController.Instance.TraceLifeTime;
+        _timer = TraceController.Instance.TraceLifetime;
     }
 }

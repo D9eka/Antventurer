@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Interactable
+  - Trace
   layers:
   - Default
   - TransparentFX
@@ -14,9 +15,9 @@ TagManager:
   - UI
   - Interactable
   - Ground
+  - Player
   - Trace
-  - 
-  - 
+  - DeathLayer
   - 
   - 
   - 

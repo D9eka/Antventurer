@@ -10,7 +10,7 @@ public class TraceController : MonoBehaviour
 
     private Dictionary<(float, float), Trace> _traces = new();
 
-    public float TraceLifeTime => _traceLifetimeSecond;
+    public float TraceLifetime => _traceLifetimeSecond;
 
     public static TraceController Instance { get; private set; }
 
@@ -89,7 +89,18 @@ public class TraceController : MonoBehaviour
 
     private void TraceController_OnTraceDestroy(object sender, Trace.OnTraceDestroyEventArgs e)
     {
-        GameObject trace = _traces[(e.position.x, e.position.y)].gameObject;
+        (float, float) key = (e.position.x, e.position.y);
+        if (!_traces.ContainsKey(key))
+        {
+            return;
+        }
+        if(_traces.ContainsKey(key) && _traces[key] == null)
+        {
+            _traces.Remove(key);
+            return;
+        }
+
+        GameObject trace = _traces[key].gameObject;
         float traceStart = trace.transform.position.x - trace.transform.localScale.x / 2.0f + _traceOffset;
         float traceEnd = trace.transform.position.x + trace.transform.localScale.x / 2.0f - _traceOffset;
 
@@ -114,5 +125,32 @@ public class TraceController : MonoBehaviour
             InstantiateTrace(trace.transform.position, traceStart, traceToDeletePos - 1);
             InstantiateTrace(trace.transform.position, traceToDeletePos + 1, traceEnd);
         }
+    }
+
+    public bool IsOnTrace(Vector2 position)
+    {
+        Vector2 tracePos = GetTracePosition(position);
+        return _traces.ContainsKey((tracePos.x, tracePos.y));
+    }
+
+    public bool IsTraceActual(Vector2 enemyPos)
+    {
+        Vector2 traceOnEnemyPos = GetTracePosition(enemyPos);
+        Vector2 traceOnPlayerPos = GetTracePosition(Player.Instance.transform.position);
+        if(_traces.ContainsKey((traceOnEnemyPos.x, traceOnEnemyPos.y)) && _traces.ContainsKey((traceOnPlayerPos.x, traceOnPlayerPos.y)) &&
+           _traces[(traceOnEnemyPos.x, traceOnEnemyPos.y)].gameObject == _traces[(traceOnPlayerPos.x, traceOnPlayerPos.y)].gameObject)
+            return true;
+        return false;
+    }
+
+    public Vector2 GetTraceDirection(Vector2 enemyPos)
+    {
+        Vector2 tracePos = GetTracePosition(enemyPos);
+        GameObject trace = _traces[(tracePos.x, tracePos.y)].gameObject;
+        float traceStart = trace.transform.position.x - trace.transform.localScale.x / 2.0f + _traceOffset;
+        float traceEnd = trace.transform.position.x + trace.transform.localScale.x / 2.0f - _traceOffset;
+        if (_traces[(traceStart, tracePos.y)].TraceLifetime < _traces[(traceStart, tracePos.y)].TraceLifetime)
+            (traceStart, traceEnd) = (traceEnd, traceStart);
+        return new Vector2(traceEnd - tracePos.x, tracePos.y - enemyPos.y).normalized;
     }
 }

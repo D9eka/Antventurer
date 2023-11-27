@@ -1,27 +1,26 @@
 ﻿using Components.ColliderBased;
 using UnityEngine;
 
-namespace Assets.Scripts.Creatures
+namespace Creatures
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Creature : MonoBehaviour
     {
-        [SerializeField] protected GameObject Visual;
+        [SerializeField] protected GameObject _visual;
 
         [SerializeField] private bool _invertScale;
-        [SerializeField] protected float Speed;
+        [SerializeField] protected float _speed;
 
-        [SerializeField] protected float JumpForce;
-        [SerializeField] protected float MaxJumpTime;
+        [SerializeField] protected float _jumpForce;
 
         [Header("Checkers")]
-        [SerializeField] protected LayerCheck GroundCheckCenter;
+        [SerializeField] protected LayerCheck _groundCheckCenter;
 
-        protected Rigidbody2D Rigidbody;
-        private Animator Animator;
+        protected Rigidbody2D _rigidbody;
+        protected Animator _animator;
 
-        protected Vector2 Direction;
-        protected bool IsGrounded;
-        protected float JumpTimeCounter;
+        protected Vector2 _direction;
+        protected bool _isGrounded;
 
         private const string IS_ON_GROUND_KEY = "is-on-ground";
         private const string IS_RUNNING_KEY = "is-running";
@@ -29,48 +28,33 @@ namespace Assets.Scripts.Creatures
 
         protected virtual void Awake()
         {
-            Rigidbody = GetComponent<Rigidbody2D>();
-            Animator = Visual.GetComponent<Animator>();
+            _rigidbody = GetComponent<Rigidbody2D>();
+            _animator = _visual.GetComponent<Animator>();
         }
 
         protected virtual void Update()
         {
-            IsGrounded = GroundCheckCenter.IsTouchingLayer;
+            _isGrounded = _groundCheckCenter.IsTouchingLayer;
 
-            var xVelocity = Direction.x * Speed;
-            Rigidbody.velocity = new Vector2(xVelocity, Rigidbody.velocity.y);
+            var xVelocity = _direction.x * _speed;
+            _rigidbody.velocity = new Vector2(xVelocity, _rigidbody.velocity.y);
 
             Jump();
 
-            Animator.SetFloat(VERTICAL_VELOCITY_KEY, Rigidbody.velocity.y);
-            Animator.SetBool(IS_ON_GROUND_KEY, IsGrounded);
-            Animator.SetBool(IS_RUNNING_KEY, Direction.x != 0);
+            _animator.SetFloat(VERTICAL_VELOCITY_KEY, _rigidbody.velocity.y);
+            _animator.SetBool(IS_ON_GROUND_KEY, _isGrounded);
+            _animator.SetBool(IS_RUNNING_KEY, _direction.x != 0);
 
-            UpdateSpriteDirection(Direction);
+            UpdateSpriteDirection(_direction);
         }
 
         protected virtual void Jump()
         {
-            bool isJumpKeyPressed = Direction.y > 0;
+            bool isJumpKeyPressed = _direction.y > 0;
 
-            if (IsGrounded)
+            if (_isGrounded && isJumpKeyPressed)
             {
-                JumpTimeCounter = MaxJumpTime;
-                if (isJumpKeyPressed)
-                {
-                    Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, JumpForce);
-                }
-                return;
-            }
-            if (!IsGrounded && !isJumpKeyPressed)
-            {
-                JumpTimeCounter = 0;
-                return;
-            }
-            if (!IsGrounded && isJumpKeyPressed && JumpTimeCounter > 0)
-            {
-                Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, JumpForce);
-                JumpTimeCounter -= Time.deltaTime;
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
                 return;
             }
         }
@@ -86,7 +70,7 @@ namespace Assets.Scripts.Creatures
 
         public void SetDirection(Vector2 direction)
         {
-            Direction = new Vector2(direction.x, direction.y);
+            _direction = new Vector2(direction.x, direction.y);
         }
     }
 }

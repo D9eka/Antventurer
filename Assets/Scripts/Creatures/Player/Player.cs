@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace Creatures.Player
 {
+    [RequireComponent(typeof(ManaComponent))]
     public class Player : Creature
     {
         [Header("Checkers")]
@@ -15,6 +16,9 @@ namespace Creatures.Player
         [SerializeField] private LayerCheck _groundCheckRight;
         [SerializeField] private LayerCheck _wallCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
+
+        [Header("Jump")]
+        [SerializeField] private float _maxJumpTime;
 
         [Header("Double Jump")]
         [SerializeField] private bool _allowDoubleJump;
@@ -29,6 +33,8 @@ namespace Creatures.Player
         [SerializeField] private int _wallJumpManaExpense;
 
         private ManaComponent _mana;
+
+        private float _jumpTimeCounter;
 
         private bool _isOnWall;
         private bool _haveDoubleJump;
@@ -72,13 +78,13 @@ namespace Creatures.Player
             _allowWallJump = PlayerPrefsController.GetPlayerWallJumpState();
             _mana = GetComponent<ManaComponent>();
 
-            _defaultGravityScale = Rigidbody.gravityScale;
+            _defaultGravityScale = _rigidbody.gravityScale;
             _jumpWallTimeCounter = _jumpWallTime;
         }
 
         protected override void Update()
         {
-            bool isFullyGrounded = _groundCheckLeft.IsTouchingLayer && GroundCheckCenter.IsTouchingLayer && _groundCheckRight.IsTouchingLayer;
+            bool isFullyGrounded = _groundCheckLeft.IsTouchingLayer && _groundCheckCenter.IsTouchingLayer && _groundCheckRight.IsTouchingLayer;
             if (isFullyGrounded)
                 OnPlayerGrounded?.Invoke(this, new OnPlayerGroundedEventArgs
                 {
@@ -97,33 +103,33 @@ namespace Creatures.Player
 
         protected override void Jump()
         {
-            bool isJumpKeyPressed = Direction.y > 0;
+            bool isJumpKeyPressed = _direction.y > 0;
 
-            if (IsGrounded)
+            if (_isGrounded)
             {
-                JumpTimeCounter = MaxJumpTime;
+                _jumpTimeCounter = _maxJumpTime;
                 _madeDoubleJump = _haveDoubleJump = false;
                 if(isJumpKeyPressed)
                 {
-                    Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, JumpForce);
+                    _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
                 }
                 return;
             }
-            if (!IsGrounded && !isJumpKeyPressed)
+            if (!_isGrounded && !isJumpKeyPressed)
             {
-                JumpTimeCounter = 0;
+                _jumpTimeCounter = 0;
                 _haveDoubleJump = _allowDoubleJump && !_madeDoubleJump;
                 return;
             }
-            if (!IsGrounded && isJumpKeyPressed && JumpTimeCounter > 0)
+            if (!_isGrounded && isJumpKeyPressed && _jumpTimeCounter > 0)
             {
-                Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, JumpForce);
-                JumpTimeCounter -= Time.deltaTime;
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _jumpForce);
+                _jumpTimeCounter -= Time.deltaTime;
                 return;
             }
-            if (!IsGrounded && isJumpKeyPressed && _haveDoubleJump)
+            if (!_isGrounded && isJumpKeyPressed && _haveDoubleJump)
             {
-                Rigidbody.velocity = new Vector2(Rigidbody.velocity.x, _doubleJumpForce);
+                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _doubleJumpForce);
                 _haveDoubleJump = false;
                 _madeDoubleJump = true;
                 _mana.ModifyMana(_doubleJumpManaExpense);
@@ -134,35 +140,35 @@ namespace Creatures.Player
 
         private void MoveOnWall()
         {
-            if (_isOnWall && !IsGrounded)
+            if (_isOnWall && !_isGrounded)
             {
-                if (!_blockXMovement && Direction.y == 0)
+                if (!_blockXMovement && _direction.y == 0)
                 {
-                    Rigidbody.gravityScale = 0f;
-                    Rigidbody.velocity = new Vector2(0, _slideSpeed);
+                    _rigidbody.gravityScale = 0f;
+                    _rigidbody.velocity = new Vector2(0, _slideSpeed);
                 }
             }
-            else if (!_isOnWall && !IsGrounded)
+            else if (!_isOnWall && !_isGrounded)
             {
-                Rigidbody.gravityScale = _defaultGravityScale;
+                _rigidbody.gravityScale = _defaultGravityScale;
             }
         }
 
         private void WallJump()
         {
-            if (_isOnWall && !IsGrounded && Direction.y > 0)
+            if (_isOnWall && !_isGrounded && _direction.y > 0)
             {
                 _blockXMovement = true;
-                Direction.x = 0;
+                _direction.x = 0;
 
-                Rigidbody.gravityScale = _defaultGravityScale;
-                Rigidbody.velocity = new Vector2(0, 0);
-                Rigidbody.velocity = new Vector2(transform.localScale.x * _jumpWallAngle.x, _jumpWallAngle.y);
+                _rigidbody.gravityScale = _defaultGravityScale;
+                _rigidbody.velocity = new Vector2(0, 0);
+                _rigidbody.velocity = new Vector2(transform.localScale.x * _jumpWallAngle.x, _jumpWallAngle.y);
                 //_mana.ModifyMana(_wallJumpManaExpense);
             }
             if (_blockXMovement && (_jumpWallTimeCounter -= Time.fixedDeltaTime) <= 0)
             {
-                if (_isOnWall || IsGrounded || Direction.x != 0)
+                if (_isOnWall || _isGrounded || _direction.x != 0)
                 {
                     _blockXMovement = false;
                     _jumpWallTimeCounter = _jumpWallTime;

@@ -8,7 +8,7 @@ namespace Components.Mana
 
         public void ModifyMana(GameObject target)
         {
-            if(target.TryGetComponent<ManaComponent>(out var manaComponent))
+            if(target.transform.parent.TryGetComponent<ManaComponent>(out var manaComponent))
                 manaComponent.ModifyMana(_manaDelta);
         }
     }

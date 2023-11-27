@@ -10,6 +10,10 @@ namespace Components.LevelManagement
     {
         public void SavePosition()
         {
+            if (PlayerPrefsController.TryGetPlayerPosition(out Vector2 lastplayerPosition) &&
+               Vector2.Distance(Player.Instance.transform.position, lastplayerPosition) < 3f)
+                return;
+
             PlayerPrefsController.SetPlayerPosition(Player.Instance.transform.position);
             PlayerPrefsController.SetPlayerDoubleJumpState(Player.Instance.AllowDoubleJump);
             PlayerPrefsController.SetPlayerWallJumpState(Player.Instance.AllowWallJump);
