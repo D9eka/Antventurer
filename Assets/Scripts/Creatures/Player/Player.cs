@@ -1,3 +1,4 @@
+using Assets.Scripts.Creatures;
 using Assets.Scripts.Creatures.Player;
 using Components.ColliderBased;
 using Components.Mana;
@@ -7,21 +8,17 @@ using UnityEngine;
 
 namespace Creatures.Player
 {
-    public class Player : MonoBehaviour
+    [RequireComponent(typeof(ManaComponent))]
+    public class Player : Creature
     {
-        [SerializeField] private bool _invertScale;
-        [SerializeField] private float _speed;
-
-        [SerializeField] private float _jumpForce;
-        [SerializeField] private float _maxJumpTime;
-
         [Header("Checkers")]
-        [SerializeField] private LayerMask GroundLayer;
-        [SerializeField] private LayerCheck GroundCheckLeft;
-        [SerializeField] private LayerCheck GroundCheckCenter;
-        [SerializeField] private LayerCheck GroundCheckRight;
+        [SerializeField] private LayerCheck _groundCheckLeft;
+        [SerializeField] private LayerCheck _groundCheckRight;
         [SerializeField] private LayerCheck _wallCheck;
         [SerializeField] private CheckCircleOverlap _interactionCheck;
+
+        [Header("Jump")]
+        [SerializeField] private float _maxJumpTime;
 
         [Header("Double Jump")]
         [SerializeField] private bool _allowDoubleJump;
@@ -35,12 +32,8 @@ namespace Creatures.Player
         [SerializeField] private float _jumpWallTime;
         [SerializeField] private int _wallJumpManaExpense;
 
-        private Rigidbody2D _rigidbody;
-        private Animator _animator;
         private ManaComponent _mana;
 
-        private Vector2 _direction;
-        private bool _isGrounded;
         private float _jumpTimeCounter;
 
         private bool _isOnWall;
@@ -49,13 +42,8 @@ namespace Creatures.Player
 
         private bool _blockXMovement;
 
-        private float _defaultGravityScale = 1f;
+        private float _defaultGravityScale;
         private float _jumpWallTimeCounter;
-
-        private const string IS_ON_GROUND_KEY = "is-on-ground";
-        private const string IS_RUNNING_KEY = "is-running";
-        private const string VERTICAL_VELOCITY_KEY = "vertical-velocity";
-        private const string IS_ON_WALL_KEY = "is-on-wall";
 
         public static Player Instance { get; private set; }
 
@@ -71,8 +59,10 @@ namespace Creatures.Player
         public EventHandler<int> OnChangeProgress;
         public EventHandler OnUnlockDoubleJump;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             if (Instance != null)
             {
                 Destroy(Instance);
@@ -86,60 +76,32 @@ namespace Creatures.Player
 
             _allowDoubleJump = PlayerPrefsController.GetPlayerDoubleJumpState();
             _allowWallJump = PlayerPrefsController.GetPlayerWallJumpState();
-
-            _rigidbody = GetComponent<Rigidbody2D>();
-            _animator = GetComponent<Animator>();
             _mana = GetComponent<ManaComponent>();
 
             _defaultGravityScale = _rigidbody.gravityScale;
-            _jumpWallTimeCounter = _jumpWallTime;            
+            _jumpWallTimeCounter = _jumpWallTime;
         }
 
-        private void Update()
+        protected override void Update()
         {
-            _isGrounded = GroundCheckCenter.IsTouchingLayer;
-            bool isFullyGrounded = GroundCheckLeft.IsTouchingLayer && GroundCheckCenter.IsTouchingLayer && GroundCheckRight.IsTouchingLayer;
+            bool isFullyGrounded = _groundCheckLeft.IsTouchingLayer && _groundCheckCenter.IsTouchingLayer && _groundCheckRight.IsTouchingLayer;
             if (isFullyGrounded)
                 OnPlayerGrounded?.Invoke(this, new OnPlayerGroundedEventArgs
                 {
                     position = transform.position
                 });
 
-            var xVelocity = _blockXMovement ? _rigidbody.velocity.x : _direction.x * _speed;
-            _rigidbody.velocity = new Vector2(xVelocity, _rigidbody.velocity.y);
-
-            Jump();
-
+            _isOnWall = _wallCheck.IsTouchingLayer;
             if (_allowWallJump)
             {
                 MoveOnWall();
                 WallJump();
             }
 
-            _animator.SetFloat(VERTICAL_VELOCITY_KEY, _rigidbody.velocity.y);
-            _animator.SetBool(IS_ON_GROUND_KEY, _isGrounded);
-            _animator.SetBool(IS_RUNNING_KEY, _direction.x != 0);
-
-            UpdateSpriteDirection(_direction);
-
-            _isOnWall = _wallCheck.IsTouchingLayer;
+            base.Update();
         }
 
-        public void UpdateSpriteDirection(Vector2 direction)
-        {
-            var multiplier = _invertScale ? -1 : 1;
-            if (direction.x > 0)
-                transform.localScale = new Vector3(multiplier, 1, 1);
-            else if (direction.x < 0)
-                transform.localScale = new Vector3(-multiplier, 1, 1);
-        }
-
-        public void SetDirection(Vector2 direction)
-        {
-            _direction = new Vector2(direction.x, direction.y);
-        }
-
-        private void Jump()
+        protected override void Jump()
         {
             bool isJumpKeyPressed = _direction.y > 0;
 

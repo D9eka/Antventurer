@@ -1,9 +1,5 @@
-using Creatures;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static Creatures.Player.Player;
 
 public class Trace : MonoBehaviour
 {
@@ -13,21 +9,32 @@ public class Trace : MonoBehaviour
         public Vector2 position;
     }
 
+    private Vector2 _position;
     private float _timer;
 
-    private void Start()
+    private bool _isInitialized;
+
+    public float TraceLifetime => _timer;
+
+    public void Initialize(Vector2 position, float traceLifeTime)
     {
-        _timer = TraceController.Instance.TraceLifeTime;
+        _position = position;
+        _timer = traceLifeTime;
+
+        _isInitialized = true;
     }
 
     private void FixedUpdate()
     {
+        if (!_isInitialized)
+            return;
+
         _timer -= Time.deltaTime;
         if(_timer < 0)
         {
             OnTraceDestroy?.Invoke(this, new OnTraceDestroyEventArgs
             {
-                position = transform.position
+                position = _position
             });
             Destroy(gameObject);
         }
@@ -35,6 +42,6 @@ public class Trace : MonoBehaviour
 
     public void UpdateTimer()
     {
-        _timer = TraceController.Instance.TraceLifeTime;
+        _timer = TraceController.Instance.TraceLifetime;
     }
 }
