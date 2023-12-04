@@ -29,13 +29,17 @@ namespace Components.UI
             }
             Instance = this;
 
-            Player.Instance.GetComponent<ManaComponent>().OnValueChange += HUD_OnValueChange;
+            PlayerController.Instance.GetComponent<ManaComponent>().OnValueChange += HUD_OnValueChange;
 
-            UpdateMana(Player.Instance.GetComponent<ManaComponent>().Mana,
-                       Player.Instance.GetComponent<ManaComponent>().MaxMana);
+            LoadData(PlayerPrefsController.GetPlayerData());
 
             StartCoroutine(ViewMessage(_location, _locationName, "Начало", 5f));
         }
+
+        private void LoadData(PlayerData data)
+        {
+            UpdateMana(data.Mana, data.MaxMana);
+        }    
 
         public void SendMessage(string message, float viewTime)
         {
@@ -56,9 +60,9 @@ namespace Components.UI
             UpdateMana(e.value, e.maxValue);
         }
 
-        private void UpdateMana(int value, int maxValue)
+        private void UpdateMana(float value, float maxValue)
         {
-            _manaValue.text = value.ToString();
+            _manaValue.text = ((int)value).ToString();
             _manaSlider.maxValue = maxValue;
             _manaSlider.value = value;
         }

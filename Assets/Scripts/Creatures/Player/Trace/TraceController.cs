@@ -23,11 +23,11 @@ public class TraceController : MonoBehaviour
         }
         Instance = this;
 
-        Player.Instance.OnPlayerGrounded += TraceController_OnPlayerGrounded;
+        PlayerController.Instance.OnPlayerGrounded += TraceController_OnPlayerGrounded;
         Trace.OnTraceDestroy += TraceController_OnTraceDestroy;
     }
 
-    private void TraceController_OnPlayerGrounded(object sender, Player.OnPlayerGroundedEventArgs e)
+    private void TraceController_OnPlayerGrounded(object sender, PlayerController.OnPlayerGroundedEventArgs e)
     {
         Vector2 tracePosition = GetTracePosition(e.position);
 
@@ -136,7 +136,7 @@ public class TraceController : MonoBehaviour
     public bool IsTraceActual(Vector2 enemyPos)
     {
         Vector2 traceOnEnemyPos = GetTracePosition(enemyPos);
-        Vector2 traceOnPlayerPos = GetTracePosition(Player.Instance.transform.position);
+        Vector2 traceOnPlayerPos = GetTracePosition(PlayerController.Instance.transform.position);
         if(_traces.ContainsKey((traceOnEnemyPos.x, traceOnEnemyPos.y)) && _traces.ContainsKey((traceOnPlayerPos.x, traceOnPlayerPos.y)) &&
            _traces[(traceOnEnemyPos.x, traceOnEnemyPos.y)].gameObject == _traces[(traceOnPlayerPos.x, traceOnPlayerPos.y)].gameObject)
             return true;

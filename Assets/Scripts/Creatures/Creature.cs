@@ -22,9 +22,9 @@ namespace Creatures
         protected Vector2 _direction;
         protected bool _isGrounded;
 
-        private const string IS_ON_GROUND_KEY = "is-on-ground";
-        private const string IS_RUNNING_KEY = "is-running";
-        private const string VERTICAL_VELOCITY_KEY = "vertical-velocity";
+        protected const string IS_ON_GROUND_KEY = "is-on-ground";
+        protected const string IS_RUNNING_KEY = "is-running";
+        protected const string VERTICAL_VELOCITY_KEY = "vertical-velocity";
 
         protected virtual void Awake()
         {
@@ -36,16 +36,17 @@ namespace Creatures
         {
             _isGrounded = _groundCheckCenter.IsTouchingLayer;
 
-            var xVelocity = _direction.x * _speed;
-            _rigidbody.velocity = new Vector2(xVelocity, _rigidbody.velocity.y);
-
+            Move();
             Jump();
 
-            _animator.SetFloat(VERTICAL_VELOCITY_KEY, _rigidbody.velocity.y);
-            _animator.SetBool(IS_ON_GROUND_KEY, _isGrounded);
-            _animator.SetBool(IS_RUNNING_KEY, _direction.x != 0);
+            UpdateAnimations();
+            UpdateSpriteDirection();
+        }
 
-            UpdateSpriteDirection(_direction);
+        protected virtual void Move()
+        {
+            var xVelocity = _direction.x * _speed;
+            _rigidbody.velocity = new Vector2(xVelocity, _rigidbody.velocity.y);
         }
 
         protected virtual void Jump()
@@ -59,18 +60,25 @@ namespace Creatures
             }
         }
 
-        public void UpdateSpriteDirection(Vector2 direction)
+        protected virtual void UpdateAnimations()
+        {
+            _animator.SetFloat(VERTICAL_VELOCITY_KEY, _rigidbody.velocity.y);
+            _animator.SetBool(IS_ON_GROUND_KEY, _isGrounded);
+            _animator.SetBool(IS_RUNNING_KEY, _direction.x != 0);
+        }
+
+        public void UpdateSpriteDirection()
         {
             var multiplier = _invertScale ? -1 : 1;
-            if (direction.x > 0)
+            if (_direction.x > 0)
                 transform.localScale = new Vector3(multiplier, 1, 1);
-            else if (direction.x < 0)
+            else if (_direction.x < 0)
                 transform.localScale = new Vector3(-multiplier, 1, 1);
         }
 
-        public void SetDirection(Vector2 direction)
+        public virtual void SetDirection(Vector2 direction)
         {
-            _direction = new Vector2(direction.x, direction.y);
+            _direction = direction;
         }
     }
 }

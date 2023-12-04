@@ -1,32 +1,63 @@
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 namespace Creatures.Player
 {
     public class PlayerInputReader : MonoBehaviour
     {
-        [SerializeField] private Player _player;
+        public EventHandler<Vector2> OnPlayerMove;
+        public EventHandler<bool> OnPlayerJump;
+        public EventHandler OnPlayerInteract;
+        public EventHandler OnPlayerUseP2Skill;
+        public EventHandler<bool> OnPlayerUseP3Skill;
+
+        public EventHandler OnPlayerChangeDoubleJumpState;
+        public EventHandler OnPlayerChangeWallJumpState;
+
 
         public void OnMove(InputAction.CallbackContext context)
         {
-            var direction = context.ReadValue<Vector2>();
-            _player.SetDirection(direction);
+            Vector2 direction = context.ReadValue<Vector2>();
+            OnPlayerMove?.Invoke(this, direction);
+        }
+
+        public void OnJump(InputAction.CallbackContext context) 
+        {
+            if (context.started)
+                OnPlayerJump?.Invoke(this, true);
+            if (context.canceled)
+                OnPlayerJump?.Invoke(this, false);
         }
 
         public void OnInteract(InputAction.CallbackContext context)
         {
             if (context.canceled)
-                _player.Interact();
+                OnPlayerInteract?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnChangeDoubleJumpState(InputAction.CallbackContext context)
         {
-            _player.ChangeDoubleJumpState();
+            OnPlayerChangeDoubleJumpState?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnChangeWallJumpState(InputAction.CallbackContext context)
         {
-            _player.ChangeWallJumpState();
+            OnPlayerChangeWallJumpState?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnUseP2Skill(InputAction.CallbackContext context)
+        {
+            OnPlayerUseP2Skill?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void OnActivateP3Skill(InputAction.CallbackContext context)
+        {
+            if (context.started)
+                OnPlayerUseP3Skill?.Invoke(this, true);
+            if(context.canceled)
+                OnPlayerUseP3Skill?.Invoke(this, false);
         }
     }
 }

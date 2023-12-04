@@ -12,7 +12,7 @@ namespace Components.UI
 
         private void Start()
         {
-            Player.Instance.OnUnlockDoubleJump += Skills_OnUnlockDoubleJump;
+            PlayerController.Instance.OnUnlockDoubleJump += Skills_OnUnlockDoubleJump;
         }
 
         public void Skills_OnUnlockDoubleJump(object sender, EventArgs e)

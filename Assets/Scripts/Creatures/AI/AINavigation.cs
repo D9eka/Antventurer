@@ -11,7 +11,9 @@ namespace Assets.Scripts.Creatures.AI
     public class AINavigation : MonoBehaviour
     {
         [Header("Pathfinder")]
+        [SerializeField] private GameObject _targetPrefab;
         [SerializeField] private GameObject _target;
+        [SerializeField] private bool _needJump;
         [SerializeField] private float _pathUpdateSeconds = 0.5f;
         [SerializeField] private float _threshold = 0.25f;
 
@@ -22,20 +24,35 @@ namespace Assets.Scripts.Creatures.AI
         private Path _path;
         private int _currentWaypoint = 0;
 
+        private bool _isTargetSpawned;
+
         private Creature _creature;
 
         private int _patrollingPointIndex;
 
-        public bool followEnabled = true;
+        [HideInInspector] public bool followEnabled = true;
 
         public GameObject GetTarget()
         { 
             return _target; 
         }
 
-        public void SetTarget(GameObject target)
+        public void SetTarget(Vector2 target, bool needJump = false)
         {
+            GameObject gameObject = Instantiate(_targetPrefab, target, Quaternion.identity);
+            SetTarget(gameObject, needJump);
+            _isTargetSpawned = true;
+        }
+
+        public void SetTarget(GameObject target, bool needJump = false)
+        {
+            if(_isTargetSpawned) 
+            {
+                Destroy(_target);
+                _isTargetSpawned = false;
+            }
             _target = target;
+            _needJump = needJump;
         }
 
         private void Awake()
@@ -55,7 +72,10 @@ namespace Assets.Scripts.Creatures.AI
             }
 
             Vector2 direction = (_path.vectorPath[_currentWaypoint] - transform.position).normalized;
-            _creature.SetDirection(direction);
+            if(_needJump)
+                _creature.SetDirection(direction);
+            else
+                _creature.SetDirection(new Vector2(direction.x, 0f));
 
             if (Vector2.Distance(transform.position, _path.vectorPath[_currentWaypoint]) < _threshold)
             {

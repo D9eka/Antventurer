@@ -11,12 +11,12 @@ namespace Creatures.Enemy
         [SerializeField] private Transform[] _points;
         [SerializeField] private float _threshold = 1f;
 
-        private Enemy _enemy;
+        private EnemyController _enemy;
         private int _destinationPointIndex;
 
         private void Awake()
         {
-            _enemy = GetComponent<Enemy>();
+            _enemy = GetComponent<EnemyController>();
         }
 
         public IEnumerator DoPatrol()
