@@ -346,27 +346,31 @@ MonoBehaviour:
   m_GameObject: {fileID: 2751624361626239033}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 536ea8463f751fb4a9ea795d7586673c, type: 3}
+  m_Script: {fileID: 11500000, guid: 467fb56151c5e614b8688fa960e6474f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Visual: {fileID: 4239182696783985234}
+  _visual: {fileID: 4239182696783985234}
   _invertScale: 0
-  Speed: 5
-  JumpForce: 5.1
-  MaxJumpTime: 0.5
-  GroundCheckCenter: {fileID: 7406092047943257908}
+  _speed: 5.1
+  _jumpForce: 6
+  _groundCheckCenter: {fileID: 7406092047943257908}
   _groundCheckLeft: {fileID: 4519631220417163362}
   _groundCheckRight: {fileID: 926060771693357892}
   _wallCheck: {fileID: 7853898666500079016}
   _interactionCheck: {fileID: 5722433154154497295}
+  _maxJumpTime: 0.75
   _allowDoubleJump: 0
   _doubleJumpForce: 8.5
   _doubleJumpManaExpense: -5
   _slideSpeed: -2.5
   _allowWallJump: 0
-  _jumpWallAngle: {x: -3.5, y: 7}
-  _jumpWallTime: 0.5
+  _jumpWallForce: {x: -3.5, y: 7}
   _wallJumpManaExpense: -7
+  _allowP2Skill: 0
+  _p2SkillManaExprense: 0
+  _allowP3Skill: 0
+  _p3SkillManaExprensePerSecond: 0
+  _allowFlight: 0
 --- !u!114 &5406846494489651497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,7 +383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c7fbedd6f0f64841ac454ca988f878f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 4495926289529939377}
 --- !u!114 &7496540423750670161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,6 +500,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ba94064e-b71f-46d2-85bc-2b1b03b24e90
     m_ActionName: Player/Pause[/Keyboard/escape]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 391a6d74-5a59-43a2-a688-afb219321741
+    m_ActionName: Player/ActivateP3Skill[/Keyboard/c]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player

@@ -1,42 +1,30 @@
-﻿using Assets.Scripts.Creatures.Player;
+﻿using Creatures.Player;
 using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
-using static Creatures.Player.Player;
 
 namespace Components.Mana
 {
     public class ManaComponent : MonoBehaviour
     {
-        [SerializeField] private int _maxMana;
+        [SerializeField] private float _maxMana;
         [SerializeField] private UnityEvent _onHeal;
         [SerializeField] private UnityEvent _onDamage;
         [SerializeField] private UnityEvent _onDie;
 
-        private int _mana;
+        private float _mana;
 
         public EventHandler<OnValueChangeEventArgs> OnValueChange;
         public class OnValueChangeEventArgs : EventArgs
         {
-            public int value;
-            public int maxValue;
+            public float value;
+            public float maxValue;
         }
-
-        public int Mana => _mana;
-        public int MaxMana => _maxMana;
 
         private void Start()
         {
-            if(PlayerPrefsController.TryGetPlayerMana(out var mana)) 
-            { 
-                _mana = mana;
-            }
-            else
-            {
-                _mana = _maxMana;
-            }
+            LoadData(PlayerPrefsController.GetPlayerData());
 
             OnValueChange?.Invoke(this, new OnValueChangeEventArgs
             {
@@ -45,7 +33,13 @@ namespace Components.Mana
             });
         }
 
-        public void ModifyMana(int changeValue)
+        private void LoadData(PlayerData data)
+        {
+            _maxMana = data.MaxMana;
+            _mana = data.Mana;
+        }
+
+        public void ModifyMana(float changeValue)
         {            
             _mana = Mathf.Min(_mana + changeValue, _maxMana);
             OnValueChange?.Invoke(this, new OnValueChangeEventArgs
@@ -60,6 +54,11 @@ namespace Components.Mana
                 _onDie?.Invoke();
             if(changeValue > 0)
                 _onHeal?.Invoke();
+        }
+
+        public (float mana, float maxMana) SaveData()
+        {
+            return (_mana, _maxMana);
         }
     }
 }

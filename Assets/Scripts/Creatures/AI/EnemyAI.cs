@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using Assets.Scripts.Creatures.AI;
 using Components.ColliderBased;
+using Components.Mana;
+using Creatures.Player;
 using UnityEngine;
 
 namespace Creatures.Enemy
@@ -13,16 +16,23 @@ namespace Creatures.Enemy
 
         [SerializeField] private float _maxPatrolDistance = 10f;
 
+        [Header("State: CheckTrace")]
         [SerializeField] private float _traceCheckingDelay = 2f;
+        [Header("State: AgroToPlayer")]
         [SerializeField] private float _alarmDelay = 0.5f;
+        [Header("State: GoToPlayer")]
         [SerializeField] private float _missPlayerDelay = 5f;
-        [SerializeField] private float _attackCoolDown = 1f;
         [SerializeField] private float _missPlayerCoolDown = 0.5f;
+        [Header("State: Attack(Player)")]
+        [SerializeField] private float _attackCoolDown = 1f;
+        [Header("State: FollowThePlayer")]
+        [SerializeField] private float _minDistanceToPlayer = 1.5f;
+        [SerializeField] private float _maxDistanceToPlayer = 3f;
 
         private Coroutine _current;
         private float _missPlayerCounter;
 
-        private Enemy _enemy;
+        private EnemyController _enemy;
         private AINavigation _navigation;
         private enum State
         {
@@ -40,23 +50,38 @@ namespace Creatures.Enemy
 
         private State _state;
 
-        private bool isRecruited;
-
         private void Awake()
         {
-            _enemy = GetComponent<Enemy>();
+            _enemy = GetComponent<EnemyController>();
             _navigation = GetComponent<AINavigation>();
         }
 
         private void Start()
         {
+            _enemy.OnRecruited += EnemyAi_OnRecruited;
+
             StartState(_navigation.DoPatrol(), State.Patrolling);
+        }
+
+        private void EnemyAi_OnRecruited(object sender, EventArgs e)
+        {
+            if (_state == State.Patrolling)
+            {
+                PlayerController.Instance.OnOrderToAttack += EnemyAi_OnOrderToAttack;
+                StartState(FollowThePlayer(), State.FollowThePlayer);
+            }
+        }
+
+        private void EnemyAi_OnOrderToAttack(object sender, EventArgs e)
+        {
+            StartState(AttackEnemy(), State.AttackEnemy);
         }
 
         public void OnPlayerInVision(GameObject gameObject)
         {
-            if (isRecruited || _state == State.GoToPlayer || _state == State.AttackPlayer)
+            if (_enemy.IsRecruited || _state == State.GoToPlayer || _state == State.AttackPlayer)
                 return;
+            _navigation.SetTarget(gameObject);
             _navigation.SetTarget(gameObject);
             StartState(AgroToPlayer(), State.AgroToPlayer);
         }
@@ -68,6 +93,14 @@ namespace Creatures.Enemy
                 _navigation.SetTarget(gameObject);
                 StartState(GoToTrace(), State.GoToTrace);
             }
+        }
+
+        public void OnEnemyInVision(GameObject gameObject)
+        {
+            if (_state == State.AttackEnemy)
+            {
+                return;
+            }    
         }
 
         private IEnumerator GoToTrace()
@@ -126,7 +159,7 @@ namespace Creatures.Enemy
                     _missPlayerCounter -= Time.deltaTime;
                 if (_canAttack.IsTouchingLayer)
                 {
-                    StartState(Attack(), State.AttackPlayer);
+                    StartState(AttackPlayer(), State.AttackPlayer);
                 }
                 yield return null;
             }
@@ -135,7 +168,7 @@ namespace Creatures.Enemy
             StartState(_navigation.DoPatrol(), State.Patrolling);
         }
 
-        private IEnumerator Attack()
+        private IEnumerator AttackPlayer()
         {
             _navigation.followEnabled = false;
             while (_canAttack.IsTouchingLayer)
@@ -146,12 +179,31 @@ namespace Creatures.Enemy
             StartState(GoToPlayer(), State.GoToPlayer);
         }
 
+        private IEnumerator FollowThePlayer()
+        { 
+            while (enabled)
+            {
+                if(Vector2.Distance(transform.position, PlayerController.Instance.transform.position) > _maxDistanceToPlayer)
+                {
+                    _navigation.SetTarget(new Vector2(
+                        PlayerController.Instance.transform.position.x + PlayerController.Instance.transform.localScale.x * _minDistanceToPlayer,
+                        PlayerController.Instance.transform.position.y), true);
+                }
+                yield return null;
+            }
+        }
+
+        private IEnumerator AttackEnemy()
+        {
+            yield return null;
+        }
+
         private void StartState(IEnumerator coroutine, State state)
         {
             _state = state;
             _navigation.followEnabled = true;
             Debug.Log($"Change state to {state}");
-            _enemy.SetDirection(Vector2.zero);
+            _enemy.Stop();
 
             if (_current != null)
                 StopCoroutine(_current);

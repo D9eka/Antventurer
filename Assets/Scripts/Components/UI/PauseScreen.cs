@@ -15,7 +15,7 @@ public class PauseScreen : MonoBehaviour
 
     private void Start()
     {
-        Player.Instance.OnChangeProgress += PauseScreen_OnChangeProgress;
+        PlayerController.Instance.OnChangeProgress += PauseScreen_OnChangeProgress;
     }
 
     public void PauseScreen_OnChangeProgress(object sender, int e)

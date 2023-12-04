@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Components.UI;
-using Assets.Scripts.Creatures.Player;
+using Creatures.Player;
 
 namespace Components.LevelManagement
 {
