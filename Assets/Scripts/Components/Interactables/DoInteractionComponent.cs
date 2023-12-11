@@ -6,7 +6,7 @@ namespace Components.Interactables
     {
         public void DoInteraction(GameObject go)
         {
-            if (go.TryGetComponent<InteractableComponent>(out var interactable))
+            if (go.transform.parent.TryGetComponent<InteractableComponent>(out var interactable))
                 interactable.Interact();
         }
     }
