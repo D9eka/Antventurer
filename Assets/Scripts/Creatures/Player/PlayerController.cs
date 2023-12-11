@@ -131,6 +131,17 @@ namespace Creatures.Player
             _enemyCheck.Check();
         }
 
+        public void Recruit(GameObject go)
+        {
+            if (!go.transform.parent.TryGetComponent(out EnemyController enemy))
+                return;
+            if (recruitedEnemies.Contains(enemy))
+                return;
+            recruitedEnemies.Add(enemy);
+            enemy.Recruit();
+            mana.ModifyMana(_p2SkillManaExprense);
+        }
+
         private void PlayerController_OnPlayerUseP3Skill(object sender, bool e)
         {
             if (!_allowP3Skill)
@@ -277,17 +288,6 @@ namespace Creatures.Player
         }
         #endregion
 
-        public void Recruit(GameObject go)
-        {
-            if (!go.transform.parent.TryGetComponent(out EnemyController enemy))
-                return;
-            if (recruitedEnemies.Contains(enemy))
-                return;
-            recruitedEnemies.Add(enemy);
-            enemy.Recruit();
-            mana.ModifyMana(_p2SkillManaExprense);
-        }
-
         public PlayerData SaveData()
         {
             var manaData = mana.SaveData();
@@ -314,8 +314,8 @@ namespace Creatures.Player
         private const float DEFAULT_MAX_MANA = 100f;
 
         public PlayerData(Vector2? position, float mana = DEFAULT_MANA, float maxMana = DEFAULT_MAX_MANA, 
-                          bool doubleJumpState = false, bool wallJumpState = false,
-                          bool p2State = false, bool p3State = false, bool flightState = false)
+                          bool doubleJumpState = true, bool wallJumpState = true,
+                          bool p2State = true, bool p3State = true, bool flightState = false)
         {
             Position = position;
 
