@@ -367,7 +367,7 @@ TextureImporter:
         serializedVersion: 2
         x: 87
         y: 506
-        width: 60
+        width: 202
         height: 69
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -378,27 +378,6 @@ TextureImporter:
       bones: []
       spriteID: 127509dd412bd364f81b370dae551e08
       internalID: -471458296
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI-kit_13
-      rect:
-        serializedVersion: 2
-        x: 190
-        y: 508
-        width: 98
-        height: 69
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 869bbcd6a36d4f54b810dd74c2520603
-      internalID: 1489147105
       vertices: []
       indices: 
       edges: []
@@ -596,10 +575,10 @@ TextureImporter:
       name: UI-kit_23
       rect:
         serializedVersion: 2
-        x: 837
-        y: 599
-        width: 219
-        height: 222
+        x: 958
+        y: 746
+        width: 98
+        height: 75
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
