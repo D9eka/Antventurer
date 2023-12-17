@@ -591,7 +591,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1106034662242687858, guid: 1a1cebe88955449459f714c03028a811, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2396560597845086918, guid: 1a1cebe88955449459f714c03028a811, type: 3}
       propertyPath: m_Pivot.x
@@ -3038,6 +3038,14 @@ PrefabInstance:
     - target: {fileID: 3688293035766687565, guid: 9cbc25f0e9d568e499b43e652fe43676, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637129994935933110, guid: 9cbc25f0e9d568e499b43e652fe43676, type: 3}
+      propertyPath: _mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637129994935933110, guid: 9cbc25f0e9d568e499b43e652fe43676, type: 3}
+      propertyPath: _sceneName
+      value: Start
       objectReference: {fileID: 0}
     - target: {fileID: 4637129994935933110, guid: 9cbc25f0e9d568e499b43e652fe43676, type: 3}
       propertyPath: _loadingScreen

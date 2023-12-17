@@ -50,14 +50,11 @@ namespace Creatures.Enemy
 
         private State _state;
 
-        private void Awake()
+        private void Start()
         {
             _enemy = GetComponent<EnemyController>();
             _navigation = GetComponent<AINavigation>();
-        }
 
-        private void Start()
-        {
             _enemy.OnRecruited += EnemyAi_OnRecruited;
 
             StartState(_navigation.DoPatrol(), State.Patrolling);

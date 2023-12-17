@@ -6,47 +6,88 @@ using Creatures.Player;
 
 namespace Components.LevelManagement
 {
+    public enum LoadingMode
+    {
+        Manually,
+        FromSave,
+        ToMainMenu
+    }
+
+    public enum LoadingWindow
+    {
+        Screen,
+        Fading
+    }
+
     public class LoadLevelComponent : MonoBehaviour
     {
+        [SerializeField] private LoadingWindow _window;
+        [SerializeField] private LoadingMode _mode;
+
         [SerializeField] private string _sceneName;
-        [SerializeField] private LoadingScreen _loadingScreen;
-        [Header("Position")]
-        [SerializeField] private bool _havePosition;
         [SerializeField] private Vector2 _position;
-        [Space]
+        [SerializeField] private bool _invertScale;
+
         [SerializeField] private bool _cleanPlayerPrefs;
 
         public void Load()
         {
-            if(_havePosition)
+            switch(_mode)
             {
-                PlayerPrefsController.SetPlayerPosition(_position);
+                case LoadingMode.Manually:
+                    PlayerPrefsController.SetPlayerPosition(_position);
+                    PlayerPrefsController.SetPlayerScale(_invertScale ? -1 : 1);
+                    PlayerPrefsController.SetPlayerLocation(_sceneName);
+                    break;
+                case LoadingMode.FromSave:
+                    if (PlayerPrefsController.TryGetPlayerData(out PlayerData data))
+                        _sceneName = data.Location;
+                    break;
+                case LoadingMode.ToMainMenu:
+                    _sceneName = "MainMenu";
+                    break;
             }
 
             if (_cleanPlayerPrefs)
-            {
                 PlayerPrefsController.CleanPlayerInfo();
-            }
 
             StartCoroutine(LoadAsync());
         }
 
         private IEnumerator LoadAsync()
         {
-            AsyncOperation loadAsync = SceneManager.LoadSceneAsync(_sceneName);
-            loadAsync.allowSceneActivation = false;
-            _loadingScreen.gameObject.SetActive(true);
-
-            while (!loadAsync.isDone) 
+            switch(_window)
             {
-                _loadingScreen.SetLoadingProgress(loadAsync.progress);
+                case LoadingWindow.Fading:
+                    bool waitFading = true;
+                    Fader.Instance.FadeIn(() => waitFading = false);
 
-                if(loadAsync.progress >= 0.9f && !loadAsync.allowSceneActivation)
-                {
-                    yield return new WaitForSeconds(2.2f);
-                    loadAsync.allowSceneActivation = true;
-                }
-                yield return null;
+                    yield return new WaitUntil(() => waitFading == false);
+
+                    SceneManager.LoadScene(_sceneName);
+
+                    waitFading = true;
+                    Fader.Instance.FadeOut(() => waitFading = false);
+
+                    yield return new WaitUntil(() => waitFading == false);
+                    break;
+                case LoadingWindow.Screen:
+                    AsyncOperation loadAsync = SceneManager.LoadSceneAsync(_sceneName);
+                    loadAsync.allowSceneActivation = false;
+                    LoadingScreen.Instance.Activate();
+
+                    while (!loadAsync.isDone)
+                    {
+                        LoadingScreen.Instance.SetLoadingProgress(loadAsync.progress);
+
+                        if (loadAsync.progress >= 0.9f && !loadAsync.allowSceneActivation)
+                        {
+                            yield return new WaitForSeconds(2.2f);
+                            loadAsync.allowSceneActivation = true;
+                        }
+                        yield return null;
+                    }
+                    break;
             }
         }
     }

@@ -1,4 +1,3 @@
-using Extentions;
 using UnityEditor;
 
 namespace Components.UI.Dialogs.Editor
@@ -11,6 +10,8 @@ namespace Components.UI.Dialogs.Editor
         private SerializedProperty _onFinishProperty;
 
         private SerializedProperty _modeProperty;
+        private SerializedProperty _boundModeProperty;
+        private SerializedProperty _externalModeProperty;
 
         private void OnEnable()
         {
@@ -19,6 +20,8 @@ namespace Components.UI.Dialogs.Editor
             _onFinishProperty = serializedObject.FindProperty("_onFinish");
 
             _modeProperty = serializedObject.FindProperty("_mode");
+            _boundModeProperty = serializedObject.FindProperty("_bound");
+            _externalModeProperty = serializedObject.FindProperty("_external");
         }
 
         public override void OnInspectorGUI()
@@ -29,17 +32,15 @@ namespace Components.UI.Dialogs.Editor
 
             EditorGUILayout.PropertyField(_modeProperty);
 
-            if (_modeProperty.GetEnum(out Mode mode))
+            Mode mode = (Mode)_modeProperty.intValue;
+            switch (mode)
             {
-                switch (mode)
-                {
-                    case Mode.Bound:
-                        EditorGUILayout.PropertyField(serializedObject.FindProperty("_bound"));
-                        break;
-                    case Mode.External:
-                        EditorGUILayout.PropertyField(serializedObject.FindProperty("_external"));
-                        break;
-                }
+                case Mode.Bound:
+                    EditorGUILayout.PropertyField(_boundModeProperty);
+                    break;
+                case Mode.External:
+                    EditorGUILayout.PropertyField(_externalModeProperty);
+                    break;
             }
             serializedObject.ApplyModifiedProperties();
         }

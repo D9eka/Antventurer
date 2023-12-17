@@ -5,6 +5,7 @@ using Creatures.Enemy;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Creatures.Player
 {
@@ -84,16 +85,16 @@ namespace Creatures.Player
             }
             Instance = this;
             mana = GetComponent<ManaComponent>();
-            LoadData(PlayerPrefsController.GetPlayerData());
+            if(PlayerPrefsController.TryGetPlayerData(out PlayerData data))
+                LoadData(data);
 
             defaultGravityScale = _rigidbody.gravityScale;
         }
 
         private void LoadData(PlayerData data)
         {
-            if(data.Position != null)
-                transform.position = data.Position.Value;
-
+            transform.position = data.Position.Value;
+            transform.localScale = new Vector2(data.Scale, transform.localScale.y);
             _allowDoubleJump = data.DoubleJumpState;
             _allowWallJump = data.WallJumpState;
             _allowP2Skill = data.P2State;
@@ -291,15 +292,19 @@ namespace Creatures.Player
         public PlayerData SaveData()
         {
             var manaData = mana.SaveData();
-            return new PlayerData(transform.position, manaData.mana, manaData.maxMana, 
+            return new PlayerData(SceneManager.GetActiveScene().name, transform.position, transform.localScale.x,
+                                  manaData.mana, manaData.maxMana, 
                                   _allowDoubleJump, _allowWallJump, 
                                   _allowP2Skill, _allowP3Skill, _allowFlight);
         }    
     }
 
+    [System.Serializable]
     public struct PlayerData
     {
+        public string Location { get; private set; }
         public Vector2? Position { get; private set; }
+        public float Scale { get; private set; }
 
         public float Mana { get; private set; }
         public float MaxMana { get; private set; }
@@ -313,11 +318,13 @@ namespace Creatures.Player
         private const float DEFAULT_MANA = 100f;
         private const float DEFAULT_MAX_MANA = 100f;
 
-        public PlayerData(Vector2? position, float mana = DEFAULT_MANA, float maxMana = DEFAULT_MAX_MANA, 
+        public PlayerData(string location, Vector2 position, float scale = 1f, float mana = DEFAULT_MANA, float maxMana = DEFAULT_MAX_MANA, 
                           bool doubleJumpState = true, bool wallJumpState = true,
                           bool p2State = true, bool p3State = true, bool flightState = false)
         {
+            Location = location;
             Position = position;
+            Scale = scale;
 
             Mana = mana;
             MaxMana = maxMana;
