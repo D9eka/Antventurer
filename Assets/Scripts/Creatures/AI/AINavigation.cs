@@ -55,7 +55,7 @@ namespace Assets.Scripts.Creatures.AI
             _needJump = needJump;
         }
 
-        private void Awake()
+        private void Start()
         {
             _seeker = GetComponent<Seeker>();
             _creature = GetComponent<Creature>();

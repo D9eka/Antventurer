@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Creatures.Player
 {
     public static class PlayerPrefsController
     {
+        #region Player
+        private const string PLAYER_LOCATION = "PlayerLocation";
         private const string PLAYER_POSITION_X = "PlayerPosX";
         private const string PLAYER_POSITION_Y = "PlayerPosY";
+        private const string PLAYER_SCALE = "PlayerScale";
 
         private const string PLAYER_MANA = "PlayerMana";
         private const string PLAYER_MAX_MANA = "PlayerMaxMana";
@@ -17,14 +19,17 @@ namespace Creatures.Player
         private const string PLAYER_ALLOW_P3_SKILL = "PlayerAllowP3Skill";
         private const string PLAYER_ALLOW_FLIGHT = "PlayerAllowFlight";
 
-        public static PlayerData GetPlayerData()
+        public static bool TryGetPlayerData(out PlayerData data)
         {
-            Vector2? position = null;
-            if (!TryGetPlayerPosition(out Vector2 pos) || GetPlayerMaxMana() == 0)
-                return new PlayerData(position);
-            else
-                return new PlayerData(pos, GetPlayerMana(), GetPlayerMaxMana(), 
-                                      GetPlayerDoubleJumpState(), GetPlayerWallJumpState(), GetPlayerP2State(), GetPlayerP3State(), GetPlayerFlightState());
+            if (!PlayerPrefs.HasKey(PLAYER_LOCATION) || !PlayerPrefs.HasKey(PLAYER_MAX_MANA))
+            {
+                data = new PlayerData();
+                return false;
+            }
+            data = new PlayerData(GetPlayerLocation(), GetPlayerPosition(), GetPlayerScale(),
+                                  GetPlayerMana(), GetPlayerMaxMana(), 
+                                  GetPlayerDoubleJumpState(), GetPlayerWallJumpState(), GetPlayerP2State(), GetPlayerP3State(), GetPlayerFlightState());
+            return true;
         }
 
         public static void SavePlayerData()
@@ -32,6 +37,7 @@ namespace Creatures.Player
             PlayerData data = PlayerController.Instance.SaveData();
 
             SetPlayerPosition(data.Position.Value);
+            SetPlayerScale(data.Scale);
 
             SetPlayerMana(data.Mana);
             SetPlayerMaxMana(data.MaxMana);
@@ -42,25 +48,41 @@ namespace Creatures.Player
             SetPlayerP3State(data.P3State);
             SetPlayerFlightState(data.FlightState);
         }
+        #endregion
 
         #region Position
-        public static bool TryGetPlayerPosition(out Vector2 position)
+        public static Vector2 GetPlayerPosition()
         {
-            if (PlayerPrefs.HasKey(PLAYER_POSITION_X) && PlayerPrefs.HasKey(PLAYER_POSITION_Y))
-            {
-                position = new Vector2(PlayerPrefs.GetFloat(PLAYER_POSITION_X), PlayerPrefs.GetFloat(PLAYER_POSITION_Y));
-                return true;
-            }
-
-            position = Vector2.zero;
-            Debug.Log($"GET POS: 0 0");
-            return false;
+            return new Vector2(PlayerPrefs.GetFloat(PLAYER_POSITION_X), PlayerPrefs.GetFloat(PLAYER_POSITION_Y));
         }
 
         public static void SetPlayerPosition(Vector2 position)
         {
             PlayerPrefs.SetFloat(PLAYER_POSITION_X, position.x);
             PlayerPrefs.SetFloat(PLAYER_POSITION_Y, position.y);
+        }
+        #endregion
+
+        #region Scale
+        public static float GetPlayerScale()
+        {
+            return GetFloat(PLAYER_SCALE);
+        }
+
+        public static void SetPlayerScale(float scale)
+        {
+            SetFloat(PLAYER_SCALE, scale);
+        }
+        #endregion
+
+        #region Location
+        public static string GetPlayerLocation()
+        {
+            return GetString(PLAYER_LOCATION);
+        }
+        public static void SetPlayerLocation(string location)
+        {
+            SetString(PLAYER_LOCATION, location);
         }
         #endregion
 
@@ -148,6 +170,7 @@ namespace Creatures.Player
         }
         #endregion
 
+        #region Bool
         private static bool GetBool(string key)
         {
             if (PlayerPrefs.HasKey(key))
@@ -161,7 +184,9 @@ namespace Creatures.Player
         {
             PlayerPrefs.SetInt(key, state ? 1 : 0);
         }
+        #endregion
 
+        #region Float
         public static float GetFloat(string key)
         {
             return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetFloat(key) : 0;
@@ -171,11 +196,25 @@ namespace Creatures.Player
         {
             PlayerPrefs.SetFloat(key, value);
         }
+        #endregion
+
+        #region String
+        public static string GetString(string key)
+        {
+            return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetString(key) : "";
+        }
+        public static void SetString(string key, string value)
+        {
+            PlayerPrefs.SetString(key, value);
+        }
+        #endregion
 
         public static void CleanPlayerInfo()
         {
             PlayerPrefs.DeleteKey(PLAYER_POSITION_X);
             PlayerPrefs.DeleteKey(PLAYER_POSITION_Y);
+            PlayerPrefs.DeleteKey(PLAYER_SCALE);
+            PlayerPrefs.DeleteKey(PLAYER_LOCATION);
 
             PlayerPrefs.DeleteKey(PLAYER_MANA);
             PlayerPrefs.DeleteKey(PLAYER_MAX_MANA);

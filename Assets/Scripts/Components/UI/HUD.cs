@@ -31,9 +31,12 @@ namespace Components.UI
 
             PlayerController.Instance.GetComponent<ManaComponent>().OnValueChange += HUD_OnValueChange;
 
-            LoadData(PlayerPrefsController.GetPlayerData());
+            if (PlayerPrefsController.TryGetPlayerData(out PlayerData data))
+                LoadData(data);
 
-            StartCoroutine(ViewMessage(_location, _locationName, "Начало", 5f));
+
+
+            StartCoroutine(ViewMessage(_location, _locationName, Location.Instance.Name, 5f));
         }
 
         private void LoadData(PlayerData data)
@@ -51,7 +54,7 @@ namespace Components.UI
             textHandler.text = message;
             go.SetActive(true);
             yield return new WaitForSeconds(viewTime);
-            textHandler.text = "";
+            textHandler.text = string.Empty;
             go.SetActive(false);
         }
 

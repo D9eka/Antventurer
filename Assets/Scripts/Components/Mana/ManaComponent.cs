@@ -24,7 +24,9 @@ namespace Components.Mana
 
         private void Start()
         {
-            LoadData(PlayerPrefsController.GetPlayerData());
+            _mana = _maxMana;
+            if(PlayerPrefsController.TryGetPlayerData(out PlayerData data))
+                LoadData(data);
 
             OnValueChange?.Invoke(this, new OnValueChangeEventArgs
             {
