@@ -44,7 +44,7 @@ public class TraceController : MonoBehaviour
     private Vector2 GetTracePosition(Vector2 position)
     {
         float xPos = Mathf.Floor(position.x) + _traceOffset;
-        float yPos = Mathf.Floor(position.y) - _tracePrefab.transform.localScale.y / 2;
+        float yPos = Mathf.Round(position.y) - _tracePrefab.transform.localScale.y / 2;
         return new Vector2(xPos, yPos);
     }
 

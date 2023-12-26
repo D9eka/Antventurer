@@ -61,6 +61,8 @@ namespace Creatures.Player
 
         private bool p3SkillEnabled;
 
+        private const string DOUBLE_JUMP_KEY = "double-jump";
+
         public static PlayerController Instance { get; private set; }
 
         public EventHandler<OnPlayerGroundedEventArgs> OnPlayerGrounded;
@@ -181,7 +183,7 @@ namespace Creatures.Player
 
         protected override void Update()
         {
-            _isGrounded = _groundCheckCenter.IsTouchingLayer;
+            _isGrounded = _groundCheckCenter.IsTouchingLayer || _groundCheckCenter.IsTouchingLayer || _groundCheckRight.IsTouchingLayer;
             bool isFullyGrounded = _groundCheckLeft.IsTouchingLayer && _groundCheckCenter.IsTouchingLayer && _groundCheckRight.IsTouchingLayer;
             if (isFullyGrounded && !p3SkillEnabled)
                 OnPlayerGrounded?.Invoke(this, new OnPlayerGroundedEventArgs
@@ -241,6 +243,7 @@ namespace Creatures.Player
             if (!_isGrounded && isJumpKeyPressed && haveDoubleJump)
             {
                 _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, _doubleJumpForce);
+                _animator.SetTrigger(DOUBLE_JUMP_KEY);
                 haveDoubleJump = false;
                 madeDoubleJump = true;
                 mana.ModifyMana(_doubleJumpManaExpense);
