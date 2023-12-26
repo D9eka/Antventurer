@@ -10,6 +10,7 @@ namespace Creatures.Enemy
         [Header("Checkers")]
         [SerializeField] private CheckCircleOverlap _attackRange;
 
+        private const string CHECK_TRACE_KEY = "check-trace";
         private const string HIT_KEY = "hit";
         private const string ATTACK_KEY = "attack";
 
@@ -40,16 +41,19 @@ namespace Creatures.Enemy
             _rigidbody.velocity = Vector2.zero;
         }
 
-        public virtual void TakeDamage()
+        public void CheckTrace()
+        {
+            _animator.SetTrigger(CHECK_TRACE_KEY);
+        }
+
+        public void TakeDamage()
         {
             _animator.SetTrigger(HIT_KEY);
         }
 
-        public virtual void Attack()
+        public void Attack()
         {
-            Debug.Log("Attack");
             _animator.SetTrigger(ATTACK_KEY);
-            OnDoAttack();
         }
 
         public void OnDoAttack()

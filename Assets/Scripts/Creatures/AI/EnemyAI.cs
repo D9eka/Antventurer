@@ -12,6 +12,7 @@ namespace Creatures.Enemy
     public class EnemyAI : MonoBehaviour
     {
         [SerializeField] private LayerCheck _vision;
+        [SerializeField] private Animator _signAnimator;
         [SerializeField] private LayerCheck _canAttack;
 
         [SerializeField] private float _maxPatrolDistance = 10f;
@@ -50,6 +51,10 @@ namespace Creatures.Enemy
 
         private State _state;
 
+        private const string SUSPICION_SIGN_KEY = "suspicion-sign";
+        private const string DETECTION_SIGN_KEY = "detection-sign";
+        private const string RECRUITMENT_SIGN_KEY = "recruitment-sign";
+
         private void Start()
         {
             _enemy = GetComponent<EnemyController>();
@@ -65,6 +70,7 @@ namespace Creatures.Enemy
             if (_state == State.Patrolling)
             {
                 PlayerController.Instance.OnOrderToAttack += EnemyAi_OnOrderToAttack;
+                _signAnimator.SetTrigger(RECRUITMENT_SIGN_KEY);
                 StartState(FollowThePlayer(), State.FollowThePlayer);
             }
         }
@@ -80,6 +86,7 @@ namespace Creatures.Enemy
                 return;
             _navigation.SetTarget(gameObject);
             _navigation.SetTarget(gameObject);
+            _signAnimator.SetTrigger(DETECTION_SIGN_KEY);
             StartState(AgroToPlayer(), State.AgroToPlayer);
         }
 
@@ -88,6 +95,7 @@ namespace Creatures.Enemy
             if(_state == State.Patrolling || (_state == State.GoToTrace && gameObject != _navigation.GetTarget()))
             {
                 _navigation.SetTarget(gameObject);
+                _signAnimator.SetTrigger(SUSPICION_SIGN_KEY);
                 StartState(GoToTrace(), State.GoToTrace);
             }
         }
@@ -116,6 +124,7 @@ namespace Creatures.Enemy
         private IEnumerator CheckTrace()
         {
             _navigation.followEnabled = false;
+            _enemy.CheckTrace();
             yield return new WaitForSeconds(_traceCheckingDelay);
             if (TraceController.Instance.IsTraceActual(_enemy.transform.position))
                 StartState(FollowTheTrace(), State.FollowTheTrace);

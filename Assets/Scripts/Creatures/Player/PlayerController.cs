@@ -62,6 +62,9 @@ namespace Creatures.Player
         private bool p3SkillEnabled;
 
         private const string DOUBLE_JUMP_KEY = "double-jump";
+        private const string IS_ON_WALL_KEY = "is-on-wall";
+
+        public bool Active { get; private set; }
 
         public static PlayerController Instance { get; private set; }
 
@@ -91,6 +94,7 @@ namespace Creatures.Player
                 LoadData(data);
 
             defaultGravityScale = _rigidbody.gravityScale;
+            Active = true;
         }
 
         private void LoadData(PlayerData data)
@@ -183,7 +187,7 @@ namespace Creatures.Player
 
         protected override void Update()
         {
-            _isGrounded = _groundCheckCenter.IsTouchingLayer || _groundCheckCenter.IsTouchingLayer || _groundCheckRight.IsTouchingLayer;
+            _isGrounded = _groundCheckLeft.IsTouchingLayer || _groundCheckCenter.IsTouchingLayer || _groundCheckRight.IsTouchingLayer;
             bool isFullyGrounded = _groundCheckLeft.IsTouchingLayer && _groundCheckCenter.IsTouchingLayer && _groundCheckRight.IsTouchingLayer;
             if (isFullyGrounded && !p3SkillEnabled)
                 OnPlayerGrounded?.Invoke(this, new OnPlayerGroundedEventArgs
@@ -209,6 +213,12 @@ namespace Creatures.Player
 
             UpdateAnimations();
             UpdateSpriteDirection();
+        }
+
+        public override void UpdateSpriteDirection()
+        {
+            base.UpdateSpriteDirection();
+            _animator.SetBool(IS_ON_WALL_KEY, isTouchingWall);
         }
 
         protected override void Jump()
@@ -291,6 +301,11 @@ namespace Creatures.Player
             mana.ModifyMana(_wallJumpManaExpense);
         }
         #endregion
+
+        public void Deactivate()
+        {
+            Active = false;
+        }
 
         public PlayerData SaveData()
         {

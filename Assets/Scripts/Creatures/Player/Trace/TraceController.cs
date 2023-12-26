@@ -29,6 +29,9 @@ public class TraceController : MonoBehaviour
 
     private void TraceController_OnPlayerGrounded(object sender, PlayerController.OnPlayerGroundedEventArgs e)
     {
+        if (!PlayerController.Instance.Active)
+            return;
+
         Vector2 tracePosition = GetTracePosition(e.position);
 
         if(_traces.ContainsKey((tracePosition.x, tracePosition.y)))
@@ -44,7 +47,7 @@ public class TraceController : MonoBehaviour
     private Vector2 GetTracePosition(Vector2 position)
     {
         float xPos = Mathf.Floor(position.x) + _traceOffset;
-        float yPos = Mathf.Round(position.y) - _tracePrefab.transform.localScale.y / 2;
+        float yPos = Mathf.Round(position.y) + _tracePrefab.GetComponent<BoxCollider2D>().size.y / 2;
         return new Vector2(xPos, yPos);
     }
 
@@ -63,9 +66,15 @@ public class TraceController : MonoBehaviour
 
     private void InstantiateTrace(Vector2 tracePosition, float traceStart, float traceEnd)
     {
-        var newTrace = Instantiate(_tracePrefab, transform);
-        newTrace.transform.localScale = new Vector2(traceEnd - traceStart + 1, newTrace.transform.localScale.y);
-        newTrace.transform.position = new Vector2(traceEnd - newTrace.transform.localScale.x / 2.0f + _traceOffset, tracePosition.y);
+        GameObject newTrace = Instantiate(_tracePrefab, transform);
+
+        SpriteRenderer newTraceSprite = newTrace.GetComponent<SpriteRenderer>();
+        newTraceSprite.size = new Vector2(traceEnd - traceStart + 1, newTraceSprite.size.y);
+
+        BoxCollider2D newTraceCollider = newTrace.GetComponent<BoxCollider2D>();
+        newTraceCollider.size = new Vector2(traceEnd - traceStart + 1, newTraceCollider.size.y);
+
+        newTrace.transform.position = new Vector2(traceEnd - newTraceSprite.size.x / 2.0f + _traceOffset, tracePosition.y);
 
         HashSet<GameObject> tracesToDelete = new();
 
@@ -101,8 +110,9 @@ public class TraceController : MonoBehaviour
         }
 
         GameObject trace = _traces[key].gameObject;
-        float traceStart = trace.transform.position.x - trace.transform.localScale.x / 2.0f + _traceOffset;
-        float traceEnd = trace.transform.position.x + trace.transform.localScale.x / 2.0f - _traceOffset;
+        BoxCollider2D traceCollider = trace.GetComponent<BoxCollider2D>();
+        float traceStart = trace.transform.position.x - traceCollider.size.x / 2.0f + _traceOffset;
+        float traceEnd = trace.transform.position.x + traceCollider.size.x / 2.0f - _traceOffset;
 
         float traceToDeletePos = e.position.x;
 
@@ -147,8 +157,9 @@ public class TraceController : MonoBehaviour
     {
         Vector2 tracePos = GetTracePosition(enemyPos);
         GameObject trace = _traces[(tracePos.x, tracePos.y)].gameObject;
-        float traceStart = trace.transform.position.x - trace.transform.localScale.x / 2.0f + _traceOffset;
-        float traceEnd = trace.transform.position.x + trace.transform.localScale.x / 2.0f - _traceOffset;
+        BoxCollider2D traceCollider = trace.GetComponent<BoxCollider2D>();
+        float traceStart = trace.transform.position.x - traceCollider.size.x / 2.0f + _traceOffset;
+        float traceEnd = trace.transform.position.x + traceCollider.size.x / 2.0f - _traceOffset;
         if (_traces[(traceStart, tracePos.y)].TraceLifetime < _traces[(traceStart, tracePos.y)].TraceLifetime)
             (traceStart, traceEnd) = (traceEnd, traceStart);
         return new Vector2(traceEnd - tracePos.x, tracePos.y - enemyPos.y).normalized;
