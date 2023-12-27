@@ -1473,7 +1473,7 @@ MonoBehaviour:
   _sceneName: MainMenu
   _position: {x: 0, y: 0}
   _invertScale: 0
-  _cleanPlayerPrefs: 1
+  _cleanPlayerPrefs: 0
 --- !u!1001 &5255720440109419813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1600,7 +1600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7972782247235011361, guid: 6cd94198ccebbe04a83cd33e54a6f623, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 210.405
+      value: 210.40503
       objectReference: {fileID: 0}
     - target: {fileID: 7972782247235011361, guid: 6cd94198ccebbe04a83cd33e54a6f623, type: 3}
       propertyPath: m_AnchoredPosition.y

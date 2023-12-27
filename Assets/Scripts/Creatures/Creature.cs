@@ -8,7 +8,7 @@ namespace Creatures
     {
         [SerializeField] protected GameObject _visual;
 
-        [SerializeField] private bool _invertScale;
+        [SerializeField] protected bool _invertScale;
         [SerializeField] protected float _speed;
 
         [SerializeField] protected float _jumpForce;
@@ -67,7 +67,7 @@ namespace Creatures
             _animator.SetBool(IS_RUNNING_KEY, _direction.x != 0);
         }
 
-        public void UpdateSpriteDirection()
+        public virtual void UpdateSpriteDirection()
         {
             var multiplier = _invertScale ? -1 : 1;
             if (_direction.x > 0)

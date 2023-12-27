@@ -14,7 +14,7 @@ namespace Components.ColliderBased
             if (!other.gameObject.IsInLayer(_layer))
                 return;
 
-            if (!string.IsNullOrEmpty(_tag) && !other.gameObject.CompareTag(_tag))
+            if(_tag != "" && !string.IsNullOrEmpty(_tag) && !other.gameObject.CompareTag(_tag))
                 return;
 
             _action?.Invoke(other.gameObject);
