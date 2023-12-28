@@ -260,7 +260,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 19, y: -19}
-  m_SizeDelta: {x: 12.01, y: 24.01}
+  m_SizeDelta: {x: 24.01, y: 24.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3844153698134194963
 CanvasRenderer:
@@ -290,7 +290,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: W
+  m_text: "\u2191"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9d8ff3cb66410c45ade1f3c93991ab6, type: 2}
   m_sharedMaterial: {fileID: -360683961163225824, guid: d9d8ff3cb66410c45ade1f3c93991ab6, type: 2}
@@ -2642,7 +2642,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 19, y: -19}
-  m_SizeDelta: {x: 12.01, y: 24.01}
+  m_SizeDelta: {x: 24.01, y: 24.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9180745498057774438
 CanvasRenderer:
@@ -2672,7 +2672,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: S
+  m_text: "\u2193"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9d8ff3cb66410c45ade1f3c93991ab6, type: 2}
   m_sharedMaterial: {fileID: -360683961163225824, guid: d9d8ff3cb66410c45ade1f3c93991ab6, type: 2}
@@ -4909,7 +4909,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 19, y: -19}
-  m_SizeDelta: {x: 12.01, y: 24.01}
+  m_SizeDelta: {x: 24.01, y: 24.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &908532545405242386
 CanvasRenderer:
@@ -4939,7 +4939,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: A
+  m_text: "\u2190"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9d8ff3cb66410c45ade1f3c93991ab6, type: 2}
   m_sharedMaterial: {fileID: -360683961163225824, guid: d9d8ff3cb66410c45ade1f3c93991ab6, type: 2}
@@ -5282,7 +5282,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 19, y: -19}
-  m_SizeDelta: {x: 12.01, y: 24.01}
+  m_SizeDelta: {x: 24.01, y: 24.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2225791833029656806
 CanvasRenderer:
@@ -5312,7 +5312,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: D
+  m_text: "\u2192"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d9d8ff3cb66410c45ade1f3c93991ab6, type: 2}
   m_sharedMaterial: {fileID: -360683961163225824, guid: d9d8ff3cb66410c45ade1f3c93991ab6, type: 2}
