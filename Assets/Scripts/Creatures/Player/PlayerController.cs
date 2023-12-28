@@ -344,7 +344,7 @@ namespace Creatures.Player
                                   manaData.mana, manaData.maxMana, 
                                   _allowDoubleJump, _allowWallJump, 
                                   _allowP2Skill, _allowP3Skill, _allowFlight);
-        }    
+        } 
     }
 
     [System.Serializable]
