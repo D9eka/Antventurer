@@ -54,6 +54,7 @@ namespace Creatures.Enemy
         public void Attack()
         {
             _animator.SetTrigger(ATTACK_KEY);
+            OnDoAttack();
         }
 
         public void OnDoAttack()

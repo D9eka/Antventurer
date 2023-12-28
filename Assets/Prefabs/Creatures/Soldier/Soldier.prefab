@@ -95,9 +95,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _vision: {fileID: 2807290143608518026}
-  _signAnimator: {fileID: 0}
+  _signAnimator: {fileID: 7361826450141691407}
   _canAttack: {fileID: 7246090677827228631}
   _maxPatrolDistance: 10
+  _initialState: 1
   _traceCheckingDelay: 2
   _alarmDelay: 0.5
   _missPlayerDelay: 5
@@ -560,7 +561,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0.2, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
 --- !u!114 &735595283205548792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -634,7 +635,9 @@ GameObject:
   - component: {fileID: 8011671146449346234}
   - component: {fileID: 5917469513276727365}
   - component: {fileID: 201248243865525531}
+  - component: {fileID: 474455061385523252}
   - component: {fileID: 5897518234849321850}
+  - component: {fileID: 8585831636014711301}
   - component: {fileID: 4753500187931701944}
   m_Layer: 11
   m_Name: EnemyVisual
@@ -771,6 +774,49 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.5}
   m_Size: {x: 1.67, y: 0.85}
   m_Direction: 1
+--- !u!114 &474455061385523252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6134054680481470044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd4d276646850446b57a896833c1577, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Resin
+  _layer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5897518234849321850}
+        m_TargetAssemblyTypeName: Components.GoBased.DestroyObjectComponent, Assembly-CSharp
+        m_MethodName: DestroyObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8585831636014711301}
+        m_TargetAssemblyTypeName: Components.GoBased.DestroyObjectComponent, Assembly-CSharp
+        m_MethodName: DestroyObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5897518234849321850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,6 +830,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _objectToDestroy: {fileID: 54069066171040027}
+--- !u!114 &8585831636014711301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6134054680481470044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba62ac8ba21846b488d70f6960276035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objectToDestroy: {fileID: 6134054680481470044}
 --- !u!114 &4753500187931701944
 MonoBehaviour:
   m_ObjectHideFlags: 0

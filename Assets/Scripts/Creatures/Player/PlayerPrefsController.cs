@@ -34,6 +34,9 @@ namespace Creatures.Player
 
         public static void SavePlayerData()
         {
+            if (PlayerController.Instance == null)
+                return;
+
             PlayerData data = PlayerController.Instance.SaveData();
 
             SetPlayerPosition(data.Position.Value);

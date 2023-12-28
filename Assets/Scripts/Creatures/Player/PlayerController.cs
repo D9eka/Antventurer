@@ -76,6 +76,9 @@ namespace Creatures.Player
 
         public EventHandler<int> OnChangeProgress;
         public EventHandler OnUnlockDoubleJump;
+        public EventHandler OnUnlockWallJump;
+        public EventHandler OnUnlockP2;
+        public EventHandler OnUnlockP3;
 
         public EventHandler<GameObject> OnRecruitEnemy;
         public EventHandler OnOrderToAttack;
@@ -299,6 +302,33 @@ namespace Creatures.Player
         {
             isWallJumping = false;
             mana.ModifyMana(_wallJumpManaExpense);
+        }
+        #endregion
+
+        #region Unlock Skills
+        public void UnlockDoubleJump()
+        {
+            _allowDoubleJump = true;
+            SaveData();
+            OnUnlockDoubleJump?.Invoke(this, EventArgs.Empty);
+        }
+        public void UnlockWallJump()
+        {
+            _allowWallJump = true;
+            SaveData();
+            OnUnlockWallJump?.Invoke(this, EventArgs.Empty);
+        }
+        public void UnlockP2()
+        {
+            _allowP2Skill = true;
+            SaveData();
+            OnUnlockP2?.Invoke(this, EventArgs.Empty);
+        }
+        public void UnlockP3()
+        {
+            _allowP3Skill = true;
+            SaveData();
+            OnUnlockP3?.Invoke(this, EventArgs.Empty);
         }
         #endregion
 
