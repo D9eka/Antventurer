@@ -140,7 +140,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1864059606, guid: 02a81f473ff31ee4392e77dab0f7a6d3, type: 3}
+  m_Sprite: {fileID: 1834555588, guid: 170da7484e1c10d42afb7fed92f62ee0, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -178,7 +178,10 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5290413202034613986}
+  - {fileID: 7575058466698728292}
+  - {fileID: 2058226018077388308}
   m_Father: {fileID: 8162480546974633753}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
@@ -225,7 +228,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 7903750272110389184}
   m_FillRect: {fileID: 8185048335615815933}
   m_HandleRect: {fileID: 33952774440065355}
@@ -266,12 +269,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8185048335615815933}
-  m_Father: {fileID: 8162480546974633753}
+  m_Father: {fileID: 3039785839464626409}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.5, y: -247.9}
-  m_SizeDelta: {x: -517, y: -702}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_SizeDelta: {x: -8, y: -8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1106034662242687858
 GameObject:
@@ -355,9 +358,6 @@ RectTransform:
   - {fileID: 3409522385589197648}
   - {fileID: 6817622975251797449}
   - {fileID: 3039785839464626409}
-  - {fileID: 5290413202034613986}
-  - {fileID: 7575058466698728292}
-  - {fileID: 2058226018077388308}
   m_Father: {fileID: 2396560597845086918}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -394,12 +394,12 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 33952774440065355}
-  m_Father: {fileID: 8162480546974633753}
+  m_Father: {fileID: 3039785839464626409}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.5, y: -247.9}
-  m_SizeDelta: {x: -529, y: -694}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8937984781006351573
 GameObject:
@@ -431,12 +431,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8162480546974633753}
+  m_Father: {fileID: 3039785839464626409}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.5, y: -247.9}
-  m_SizeDelta: {x: -509, y: -694}
+  m_AnchoredPosition: {x: 0, y: -0.000030517578}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3073684306424805266
 CanvasRenderer:
@@ -466,7 +466,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1749610714, guid: 02a81f473ff31ee4392e77dab0f7a6d3, type: 3}
+  m_Sprite: {fileID: -1227644771, guid: 170da7484e1c10d42afb7fed92f62ee0, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
