@@ -27,7 +27,7 @@ namespace Creatures
 
             float scaleX = Mathf.Abs(transform.localScale.x);
             transform.localScale = new Vector2(
-                transform.position.x < _player.position.x ? scaleX : -scaleX,
+                transform.position.x > _player.position.x ? scaleX : -scaleX,
                 transform.localScale.y);
         }
 

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Runtime.InteropServices;
+using UnityEditor;
+using UnityEngine;
 
 namespace Creatures.Player
 {
@@ -21,6 +23,8 @@ namespace Creatures.Player
 
         public static bool TryGetPlayerData(out PlayerData data)
         {
+            //GetDataFromServer();
+
             if (!PlayerPrefs.HasKey(PLAYER_LOCATION) || !PlayerPrefs.HasKey(PLAYER_MAX_MANA))
             {
                 data = new PlayerData();
@@ -31,11 +35,28 @@ namespace Creatures.Player
                                   GetPlayerDoubleJumpState(), GetPlayerWallJumpState(), GetPlayerP2State(), GetPlayerP3State(), GetPlayerFlightState());
             return true;
         }
+        /*
+        public static void GetDataFromServer()
+        {
+            string json = LoadExtern();
+            if (json == null || json == "")
+                return;
+
+            PlayerData data = JsonUtility.FromJson<PlayerData>(json);
+            SavePlayerData(data);
+        }*/
 
         public static void SavePlayerData()
         {
-            PlayerData data = PlayerController.Instance.SaveData();
+            if (PlayerController.Instance == null)
+                return;
 
+            PlayerData data = PlayerController.Instance.SaveData();
+            SavePlayerData(data);
+        }
+
+        public static void SavePlayerData(PlayerData data)
+        {
             SetPlayerPosition(data.Position.Value);
             SetPlayerScale(data.Scale);
 
@@ -47,7 +68,17 @@ namespace Creatures.Player
             SetPlayerP2State(data.P2State);
             SetPlayerP3State(data.P3State);
             SetPlayerFlightState(data.FlightState);
+
+            string jsonString = JsonUtility.ToJson(data);
+            //SaveExtern(jsonString);
         }
+        /*
+        [DllImport("__Internal")]
+        private static extern void SaveExtern(string data);
+
+        [DllImport("__Internal")]
+        private static extern string LoadExtern();*/
+
         #endregion
 
         #region Position
