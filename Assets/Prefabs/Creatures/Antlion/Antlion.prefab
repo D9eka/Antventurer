@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 2770641178704125456}
   - component: {fileID: 3388849933837985572}
   - component: {fileID: 6380262962873667816}
+  - component: {fileID: 5784118648044777980}
   m_Layer: 0
   m_Name: Antlion
   m_TagString: Untagged
@@ -204,7 +205,34 @@ MonoBehaviour:
     m_Bits: 4294967295
   _action:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5784118648044777980}
+        m_TargetAssemblyTypeName: Assets.Scripts.Creatures.Antlion, Assembly-CSharp
+        m_MethodName: OnAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5784118648044777980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8170393286951026182}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3016622ffbd8f3c44a7d7dba96251c6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _creaturePos: {x: 0, y: 0}
+  _groundAnimator: {fileID: 2959153734655393842}
+  _lionAnimator: {fileID: 2169811008541057947}
 --- !u!1 &8350380268520083170
 GameObject:
   m_ObjectHideFlags: 0

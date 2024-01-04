@@ -32,6 +32,7 @@ namespace Components.LevelManagement
 
         public void Load()
         {
+            PlayerPrefsController.SavePlayerData();
             switch(_mode)
             {
                 case LoadingMode.Manually:
