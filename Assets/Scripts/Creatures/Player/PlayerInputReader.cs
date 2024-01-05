@@ -13,9 +13,6 @@ namespace Creatures.Player
         public EventHandler OnPlayerUseP2Skill;
         public EventHandler<bool> OnPlayerUseP3Skill;
 
-        public EventHandler OnPlayerChangeDoubleJumpState;
-        public EventHandler OnPlayerChangeWallJumpState;
-
 
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -35,16 +32,6 @@ namespace Creatures.Player
         {
             if (context.canceled)
                 OnPlayerInteract?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnChangeDoubleJumpState(InputAction.CallbackContext context)
-        {
-            OnPlayerChangeDoubleJumpState?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void OnChangeWallJumpState(InputAction.CallbackContext context)
-        {
-            OnPlayerChangeWallJumpState?.Invoke(this, EventArgs.Empty);
         }
 
         public void OnUseP2Skill(InputAction.CallbackContext context)
