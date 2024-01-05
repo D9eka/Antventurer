@@ -35,6 +35,11 @@ namespace Components.UI.Skills
             UpdateVisual();
         }
 
+        private void OnEnable()
+        {
+            UpdateVisual();
+        }
+
         private void AddListeners()
         {
             _doubleJumpSkillVisual.Button.onClick.AddListener(() => ChangeActiveSkill(_doubleJumpSkillVisual));
