@@ -76,7 +76,6 @@ namespace Creatures.Player
             public Vector2 position;
         }
 
-        public EventHandler<int> OnChangeProgress;
         public EventHandler<Skill> OnUnlockSkill;
 
         public EventHandler<GameObject> OnRecruitEnemy;
@@ -281,32 +280,47 @@ namespace Creatures.Player
         #region Unlock Skills
         public void UnlockDoubleJump()
         {
+            if(_allowDoubleJump)
+                return;
+
             _allowDoubleJump = true;
-            SaveData();
+            PlayerPrefsController.SavePlayerData();
             OnUnlockSkill?.Invoke(this, Skill.DoubleJump);
         }
         public void UnlockWallJump()
         {
+            if (_allowWallJump)
+                return;
+
             _allowWallJump = true;
-            SaveData();
+            PlayerPrefsController.SavePlayerData();
             OnUnlockSkill?.Invoke(this, Skill.WallJump);
         }
         public void UnlockP2()
         {
+            if (_allowP2Skill)
+                return;
+
             _allowP2Skill = true;
-            SaveData();
+            PlayerPrefsController.SavePlayerData();
             OnUnlockSkill?.Invoke(this, Skill.P2);
         }
         public void UnlockP3()
         {
+            if (_allowP3Skill)
+                return;
+
             _allowP3Skill = true;
-            SaveData();
+            PlayerPrefsController.SavePlayerData();
             OnUnlockSkill?.Invoke(this, Skill.P3);
         }
         public void UnlockFlight()
         {
+            if (_allowFlight)
+                return;
+
             _allowFlight = true;
-            SaveData();
+            PlayerPrefsController.SavePlayerData();
             OnUnlockSkill?.Invoke(this, Skill.Flight);
         }
         #endregion
@@ -320,10 +334,19 @@ namespace Creatures.Player
         {
             var manaData = mana.SaveData();
             return new PlayerData(SceneManager.GetActiveScene().name, transform.position, transform.localScale.x,
-                                  manaData.mana, manaData.maxMana, 
-                                  _allowDoubleJump, _allowWallJump, 
+                                  manaData.mana, manaData.maxMana,
+                                  GetPlayerProgress(), _allowDoubleJump, _allowWallJump, 
                                   _allowP2Skill, _allowP3Skill, _allowFlight);
-        } 
+        }
+
+        private float GetPlayerProgress()
+        {
+            return (_allowDoubleJump ? 20f : 0) + 
+                   (_allowWallJump ? 20f : 0) + 
+                   (_allowP2Skill ? 20f : 0) + 
+                   (_allowP3Skill ? 20f : 0) + 
+                   (_allowFlight ? 20f : 0);
+        }
     }
 
     [System.Serializable]
@@ -336,6 +359,7 @@ namespace Creatures.Player
         public float Mana { get; private set; }
         public float MaxMana { get; private set; }
 
+        public float Progress { get; private set; }
         public bool DoubleJumpState { get; private set; }
         public bool WallJumpState { get; private set; }
         public bool P2State { get; private set; }
@@ -345,8 +369,8 @@ namespace Creatures.Player
         private const float DEFAULT_MANA = 100f;
         private const float DEFAULT_MAX_MANA = 100f;
 
-        public PlayerData(string location, Vector2 position, float scale = 1f, float mana = DEFAULT_MANA, float maxMana = DEFAULT_MAX_MANA, 
-                          bool doubleJumpState = true, bool wallJumpState = true,
+        public PlayerData(string location, Vector2 position, float scale = 1f, float mana = DEFAULT_MANA, float maxMana = DEFAULT_MAX_MANA,
+                          float progress = 0, bool doubleJumpState = true, bool wallJumpState = true,
                           bool p2State = true, bool p3State = true, bool flightState = false)
         {
             Location = location;
@@ -356,6 +380,7 @@ namespace Creatures.Player
             Mana = mana;
             MaxMana = maxMana;
 
+            Progress = progress;
             DoubleJumpState = doubleJumpState;
             WallJumpState = wallJumpState;
             P2State = p2State;

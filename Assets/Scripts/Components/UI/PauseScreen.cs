@@ -12,15 +12,25 @@ public class PauseScreen : MonoBehaviour
     [Header("Progress")]
     [SerializeField] private TextMeshProUGUI _progressText;
     [SerializeField] private Slider _progressSlider;
+    [Space]
+    [SerializeField] private Button _skillsButton;
 
-    private void Start()
+    private void OnEnable()
     {
-        PlayerController.Instance.OnChangeProgress += PauseScreen_OnChangeProgress;
+        SetSkillButtonState();
+        UpdateSlider();
     }
 
-    public void PauseScreen_OnChangeProgress(object sender, int e)
+    private void SetSkillButtonState()
     {
-        _progressText.text = e.ToString();
-        _progressSlider.value = e;
+        Debug.Log(PlayerPrefsController.GetPlayerDoubleJumpState());
+        _skillsButton.interactable = PlayerPrefsController.GetPlayerDoubleJumpState();
+    }
+
+    public void UpdateSlider()
+    {
+        float value = PlayerPrefsController.GetPlayerProgress();
+        _progressText.text = value.ToString() + '%';
+        _progressSlider.value = value;
     }
 }
