@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f8c49ddcd295e440883cd621b9b2db3, type: 3}
+  m_Name: P3
+  m_EditorClassIdentifier: 
+  _data:
+    Name: "\u0424\u0435\u0440\u043E\u043C\u043E\u043D\u044B 3"
+    Image: {fileID: 1819145339, guid: 170da7484e1c10d42afb7fed92f62ee0, type: 3}
+    Action: "\u0423\u0434\u0435\u0440\u0436\u0438\u0432\u0430\u0439\u0442\u0435"
+    HaveKey: 1
+    KeyText: C
+    Description: "\u0427\u0442\u043E\u0431\u044B \u0437\u0430\u0434\u0435\u0440\u0436\u0430\u0442\u044C
+      \u0432\u044B\u0440\u043E\u0431\u043E\u0442\u043A\u0443 \u0444\u0435\u0440\u043E\u043C\u043E\u043D\u043E\u0432
+      \u0438 \u043E\u0431\u043E\u0440\u0432\u0430\u0442\u044C \u0441\u043B\u0435\u0434."

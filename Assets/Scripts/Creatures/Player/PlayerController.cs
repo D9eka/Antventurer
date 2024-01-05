@@ -1,11 +1,13 @@
 using Components.ColliderBased;
 using Components.Mana;
 using Components.UI;
+using Components.UI.Skills;
 using Creatures.Enemy;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Components.UI.Skills.Skills;
 
 namespace Creatures.Player
 {
@@ -75,10 +77,7 @@ namespace Creatures.Player
         }
 
         public EventHandler<int> OnChangeProgress;
-        public EventHandler OnUnlockDoubleJump;
-        public EventHandler OnUnlockWallJump;
-        public EventHandler OnUnlockP2;
-        public EventHandler OnUnlockP3;
+        public EventHandler<Skill> OnUnlockSkill;
 
         public EventHandler<GameObject> OnRecruitEnemy;
         public EventHandler OnOrderToAttack;
@@ -119,9 +118,6 @@ namespace Creatures.Player
             inputReader.OnPlayerInteract += PlayerController_OnPlayerInteract;
             inputReader.OnPlayerUseP2Skill += PlayerController_OnPlayerUseP2Skill;
             inputReader.OnPlayerUseP3Skill += PlayerController_OnPlayerUseP3Skill;
-
-            inputReader.OnPlayerChangeDoubleJumpState = PlayerController_OnPlayerChangeDoubleJumpState;
-            inputReader.OnPlayerChangeWallJumpState = PlayerController_OnPlayerChangeWallJumpState;
             #endregion
         }
 
@@ -162,29 +158,6 @@ namespace Creatures.Player
         public void OrderToAttack()
         {
             OnOrderToAttack?.Invoke(this, EventArgs.Empty);
-        }
-
-        public void PlayerController_OnPlayerChangeDoubleJumpState(object sender, EventArgs e)
-        {
-            _allowDoubleJump = !_allowDoubleJump;
-            Debug.Log($"Double Jump is {_allowDoubleJump}");
-            if (_allowDoubleJump)
-            {
-                OnUnlockDoubleJump?.Invoke(this, EventArgs.Empty);
-                OnChangeProgress?.Invoke(this, 20);
-            }
-        }
-
-        public void PlayerController_OnPlayerChangeWallJumpState(object sender, EventArgs e)
-        {
-            _allowWallJump = !_allowWallJump;
-            Debug.Log($"Wall Jump is {_allowWallJump}");
-
-            if (_allowWallJump)
-            {
-                HUD.Instance.SendMessage("Вы разблокировали прыжок от стены!", 5f);
-                OnChangeProgress?.Invoke(this, 40);
-            }
         }
         #endregion
 
@@ -310,25 +283,31 @@ namespace Creatures.Player
         {
             _allowDoubleJump = true;
             SaveData();
-            OnUnlockDoubleJump?.Invoke(this, EventArgs.Empty);
+            OnUnlockSkill?.Invoke(this, Skill.DoubleJump);
         }
         public void UnlockWallJump()
         {
             _allowWallJump = true;
             SaveData();
-            OnUnlockWallJump?.Invoke(this, EventArgs.Empty);
+            OnUnlockSkill?.Invoke(this, Skill.WallJump);
         }
         public void UnlockP2()
         {
             _allowP2Skill = true;
             SaveData();
-            OnUnlockP2?.Invoke(this, EventArgs.Empty);
+            OnUnlockSkill?.Invoke(this, Skill.P2);
         }
         public void UnlockP3()
         {
             _allowP3Skill = true;
             SaveData();
-            OnUnlockP3?.Invoke(this, EventArgs.Empty);
+            OnUnlockSkill?.Invoke(this, Skill.P3);
+        }
+        public void UnlockFlight()
+        {
+            _allowFlight = true;
+            SaveData();
+            OnUnlockSkill?.Invoke(this, Skill.Flight);
         }
         #endregion
 
