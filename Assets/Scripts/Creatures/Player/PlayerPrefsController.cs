@@ -15,6 +15,7 @@ namespace Creatures.Player
         private const string PLAYER_MANA = "PlayerMana";
         private const string PLAYER_MAX_MANA = "PlayerMaxMana";
 
+        private const string PLAYER_PROGRESS = "PlayerProgress";
         private const string PLAYER_ALLOW_DOUBLE_JUMP = "PlayerAllowDoubleJump";
         private const string PLAYER_ALLOW_WALL_JUMP = "PlayerAllowWallJump";
         private const string PLAYER_ALLOW_P2_SKILL = "PlayerAllowP2Skill";
@@ -32,7 +33,8 @@ namespace Creatures.Player
             }
             data = new PlayerData(GetPlayerLocation(), GetPlayerPosition(), GetPlayerScale(),
                                   GetPlayerMana(), GetPlayerMaxMana(), 
-                                  GetPlayerDoubleJumpState(), GetPlayerWallJumpState(), GetPlayerP2State(), GetPlayerP3State(), GetPlayerFlightState());
+                                  GetPlayerProgress(), GetPlayerDoubleJumpState(), GetPlayerWallJumpState(), 
+                                  GetPlayerP2State(), GetPlayerP3State(), GetPlayerFlightState());
             return true;
         }
         /*
@@ -63,6 +65,7 @@ namespace Creatures.Player
             SetPlayerMana(data.Mana);
             SetPlayerMaxMana(data.MaxMana);
 
+            SetPlayerProgress(data.Progress);
             SetPlayerDoubleJumpState(data.DoubleJumpState);
             SetPlayerWallJumpState(data.WallJumpState);
             SetPlayerP2State(data.P2State);
@@ -72,12 +75,14 @@ namespace Creatures.Player
             string jsonString = JsonUtility.ToJson(data);
             //SaveExtern(jsonString);
         }
+
         /*
         [DllImport("__Internal")]
         private static extern void SaveExtern(string data);
 
         [DllImport("__Internal")]
-        private static extern string LoadExtern();*/
+        private static extern string LoadExtern();
+        */
 
         #endregion
 
@@ -138,6 +143,18 @@ namespace Creatures.Player
         public static void SetPlayerMaxMana(float mana)
         {
             SetFloat(PLAYER_MAX_MANA, mana);
+        }
+        #endregion
+
+        #region Progress
+        public static float GetPlayerProgress()
+        {
+            return GetFloat(PLAYER_PROGRESS);
+        }
+
+        public static void SetPlayerProgress(float progress)
+        {
+            SetFloat(PLAYER_PROGRESS, progress);
         }
         #endregion
 
