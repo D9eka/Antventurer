@@ -1,3 +1,4 @@
+using Components.Audio;
 using Creatures.Player;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,6 +8,8 @@ using UnityEngine.UI;
 
 public class EndGameScreen : MonoBehaviour
 {
+    [SerializeField] private AudioClip _backgroundMusic;
+    [Space]
     [SerializeField] private TextMeshProUGUI _playerProgress;
     [SerializeField] private TextMeshProUGUI _endGameText;
     [Space]
@@ -17,6 +20,9 @@ public class EndGameScreen : MonoBehaviour
 
     private void Start()
     {
+        if (_backgroundMusic != null)
+            AudioHandler.Instance.PlayMusic(_backgroundMusic);
+
         float playerProgress = PlayerPrefsController.GetPlayerProgress();
         _playerProgress.text = $"{playerProgress}%";
         LayoutRebuilder.ForceRebuildLayoutImmediate(_playerProgress.transform.parent.GetComponent<RectTransform>());

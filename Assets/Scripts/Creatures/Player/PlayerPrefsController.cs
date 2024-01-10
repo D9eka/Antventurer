@@ -86,6 +86,21 @@ namespace Creatures.Player
 
         #endregion
 
+        #region Audio
+        private const string MUSIC_VOLUME = "MusicVolume";
+
+
+        public static float GetMusicVolume()
+        {
+            return GetFloat(MUSIC_VOLUME, 1f);
+        }
+
+        public static void SetMusicVolume(float volume)
+        {
+            SetFloat(MUSIC_VOLUME, volume);
+        }
+        #endregion
+
         #region Position
         public static Vector2 GetPlayerPosition()
         {
@@ -235,9 +250,9 @@ namespace Creatures.Player
         #endregion
 
         #region Float
-        public static float GetFloat(string key)
+        public static float GetFloat(string key, float defaultValue = 0f)
         {
-            return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetFloat(key) : 0;
+            return PlayerPrefs.HasKey(key) ? PlayerPrefs.GetFloat(key) : defaultValue;
         }
 
         public static void SetFloat(string key, float value)

@@ -13753,6 +13753,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: "\u041D\u0430\u0447\u0430\u043B\u043E"
+  _backgroundMusic: {fileID: 8300000, guid: a4ca10727a27379428cdd91fbf0a783f, type: 3}
 --- !u!4 &634500754
 Transform:
   m_ObjectHideFlags: 0
@@ -15015,8 +15016,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1589075821196743875, guid: 7cce91e9bd96fcc4cbaf4e73150c4ff9, type: 3}
-      propertyPath: m_AnchoredPosition.x
+      propertyPath: m_SizeDelta.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589075821196743875, guid: 7cce91e9bd96fcc4cbaf4e73150c4ff9, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589075821196743875, guid: 7cce91e9bd96fcc4cbaf4e73150c4ff9, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 190.5
       objectReference: {fileID: 0}
     - target: {fileID: 1589075821196743875, guid: 7cce91e9bd96fcc4cbaf4e73150c4ff9, type: 3}
       propertyPath: m_AnchoredPosition.y
