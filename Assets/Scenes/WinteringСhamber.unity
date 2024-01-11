@@ -3026,10 +3026,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _window: 1
   _mode: 0
-  _sceneName: EndDemo
-  _position: {x: -10, y: -1.1}
+  _sceneName: Exit
+  _position: {x: -128, y: 0}
   _invertScale: 0
-  _cleanPlayerPrefs: 1
+  _cleanPlayerPrefs: 0
 --- !u!114 &391075242
 MonoBehaviour:
   m_ObjectHideFlags: 0
