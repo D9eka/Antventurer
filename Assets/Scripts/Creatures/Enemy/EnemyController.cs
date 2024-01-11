@@ -15,6 +15,7 @@ namespace Creatures.Enemy
         private const string ATTACK_KEY = "attack";
 
         public EventHandler OnRecruited;
+        public EventHandler OnDie;
 
         public bool IsRecruited { get; private set; }
 
@@ -60,6 +61,13 @@ namespace Creatures.Enemy
         public void OnDoAttack()
         {
             _attackRange.Check();
+        }
+
+        public override void Die()
+        {
+            OnDie?.Invoke(this, EventArgs.Empty);
+            _rigidbody.velocity = Vector2.zero;
+            base.Die();
         }
     }
 }
