@@ -125,11 +125,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _content: {fileID: 0}
-  _doubleJumpSkillData: {fileID: 0}
-  _wallJumpSkillData: {fileID: 0}
-  _p2SkillData: {fileID: 0}
-  _p3SkillData: {fileID: 0}
-  _flightSkillData: {fileID: 0}
+  _doubleJumpSkillDef: {fileID: 0}
+  _wallJumpSkillDef: {fileID: 0}
+  _p2SkillDef: {fileID: 0}
+  _p3SkillDef: {fileID: 0}
+  _flightSkillDef: {fileID: 0}
 --- !u!1001 &509400656518791582
 PrefabInstance:
   m_ObjectHideFlags: 0

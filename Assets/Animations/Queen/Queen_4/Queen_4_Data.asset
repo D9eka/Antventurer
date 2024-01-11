@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a64e5b0e436d4bed9780211ae245f7b, type: 3}
+  m_Script: {fileID: 11500000, guid: fceac8e29e8ca2748ae811053883605f, type: 3}
   m_Name: Queen_4_Data
   m_EditorClassIdentifier: 
   dataName: Queen_4
@@ -17,5 +17,5 @@ MonoBehaviour:
   textureAtlas:
   - textureAtlasJSON: {fileID: 4900000, guid: 999abc1fa3b75bc48bdccf9cfb744b89, type: 3}
     texture: {fileID: 2800000, guid: f8447515882ed974badb002cccdb2bd7, type: 3}
-    material: {fileID: 0}
+    material: {fileID: 2100000, guid: 7cc38eef50553d0488c8be7524a007c5, type: 2}
     uiMaterial: {fileID: 0}

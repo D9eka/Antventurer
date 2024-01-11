@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a64e5b0e436d4bed9780211ae245f7b, type: 3}
+  m_Script: {fileID: 11500000, guid: fceac8e29e8ca2748ae811053883605f, type: 3}
   m_Name: Queen_2_Data
   m_EditorClassIdentifier: 
   dataName: Queen_2
