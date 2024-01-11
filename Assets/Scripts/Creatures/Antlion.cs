@@ -16,7 +16,7 @@ namespace Assets.Scripts.Creatures
         [Space]
         [SerializeField] private UnityArmatureComponent _lionArmature;
 
-        private const string ATTACK_KEY = "antlion";
+        private const string ATTACK_KEY = "Antlion";
         private const string CREATURE_DEATH_KEY = "death-by-antlion";
 
         public void OnAttack(GameObject creature)
@@ -24,8 +24,9 @@ namespace Assets.Scripts.Creatures
             if (!creature.TryGetComponent(out Animator creatureAnimator))
                 return;
 
-            creature.transform.parent = transform;
-            _lionArmature.transform.localScale = creature.transform.localScale;
+            creature.GetComponent<CapsuleCollider2D>().enabled = false;
+            creature.transform.parent.GetComponent<Rigidbody2D>().simulated = false;
+            creature.transform.parent.parent = transform;
             MoveCreature(creature.transform);
 
             _groundAnimator.SetTrigger(ATTACK_KEY);
@@ -35,7 +36,7 @@ namespace Assets.Scripts.Creatures
 
         private void MoveCreature(UnityEngine.Transform creature)
         {
-            creature.position = _creaturePos;
+            creature.transform.parent.localPosition = _creaturePos;
         }
     }
 }

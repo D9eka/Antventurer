@@ -131084,6 +131084,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1541053016911124273, guid: a6356563ceb316241a9d4ff26200da7a, type: 3}
   m_PrefabInstance: {fileID: 889518429}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &889518432 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4018362028956597935, guid: a6356563ceb316241a9d4ff26200da7a, type: 3}
+  m_PrefabInstance: {fileID: 889518429}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 467fb56151c5e614b8688fa960e6474f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &899696059
 GameObject:
   m_ObjectHideFlags: 0
@@ -132501,10 +132512,9 @@ MonoBehaviour:
   _action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 973712276}
-        m_TargetAssemblyTypeName: Components.LevelManagement.ReloadLevelComponent,
-          Assembly-CSharp
-        m_MethodName: Reload
+      - m_Target: {fileID: 889518432}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerController, Assembly-CSharp
+        m_MethodName: Die
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

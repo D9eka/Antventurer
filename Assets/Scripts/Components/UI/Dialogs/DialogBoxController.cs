@@ -26,6 +26,9 @@ namespace Components.UI.Dialogs
 
         public void ShowDialog(DialogData data, UnityEvent onStart, UnityEvent onFinish)
         {
+            if (_container.activeSelf)
+                return;
+
             onStart?.Invoke();
             _onFinishDialog = onFinish;
 
@@ -40,10 +43,6 @@ namespace Components.UI.Dialogs
         private IEnumerator TypeDialogText()
         {
             _content.Text.text = string.Empty;
-            /* Voice
-            if (CurrentSentence.Voice != null)
-                AudioHandler.Instance.PlaySound(CurrentSentence.Voice);
-            */
 
             var text = CurrentSentence.Value;
             foreach (var letter in text)

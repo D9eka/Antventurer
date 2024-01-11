@@ -62,7 +62,9 @@ namespace Creatures.Enemy
             _enemy = GetComponent<EnemyController>();
             _navigation = GetComponent<AINavigation>();
 
-            _enemy.OnRecruited += EnemyAi_OnRecruited;
+            _enemy.OnRecruited += EnemyController_OnRecruited;
+            _enemy.OnDie += EnemyController_OnDie;
+
 
             if (_initialState == State.Patrolling)
                 StartState(State.Patrolling);
@@ -70,7 +72,7 @@ namespace Creatures.Enemy
                 StartState(State.DoNothing);
         }
 
-        private void EnemyAi_OnRecruited(object sender, EventArgs e)
+        private void EnemyController_OnRecruited(object sender, EventArgs e)
         {
             if (_state == State.Patrolling)
             {
@@ -78,6 +80,11 @@ namespace Creatures.Enemy
                 _signAnimator.SetTrigger(RECRUITMENT_SIGN_KEY);
                 StartState(State.FollowThePlayer);
             }
+        }
+
+        private void EnemyController_OnDie(object sender, EventArgs e)
+        {
+            _navigation.followEnabled = false;
         }
 
         private void EnemyAi_OnOrderToAttack(object sender, EventArgs e)

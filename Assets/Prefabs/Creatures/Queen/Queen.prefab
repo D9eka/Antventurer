@@ -353,10 +353,9 @@ MonoBehaviour:
   _onDie:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Components.LevelManagement.ReloadLevelComponent,
-          Assembly-CSharp
-        m_MethodName: Reload
+      - m_Target: {fileID: 4018362028956597935}
+        m_TargetAssemblyTypeName: Creatures.Player.PlayerController, Assembly-CSharp
+        m_MethodName: Die
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2300,11 +2299,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unityData: {fileID: 11400000, guid: a2a2706bac035914eb1ac8f8690b8eda, type: 2}
   armatureName: Armature
-  armatureBaseName: 
+  armatureBaseName: Armature
   isUGUI: 0
   debugDraw: 0
-  animationName: 
-  _playTimes: 0
+  animationName: antlion
+  _playTimes: 1
   _timeScale: 1
   _sortingMode: 0
   _sortingLayerName: Default

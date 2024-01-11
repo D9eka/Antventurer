@@ -57,6 +57,7 @@ namespace Creatures.Player
         public void Deactivate()
         {
             PlayerController.Instance.Deactivate();
+            armature.sortingOrder = -1;
         }
     }
 }
