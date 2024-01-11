@@ -569,7 +569,7 @@ MonoBehaviour:
   _window: 0
   _mode: 0
   _sceneName: Start
-  _position: {x: 10.2, y: 2}
+  _position: {x: 9.691, y: 1.924386}
   _invertScale: 0
   _cleanPlayerPrefs: 1
 --- !u!1 &1247385949 stripped

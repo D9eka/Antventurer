@@ -65,13 +65,13 @@ namespace Creatures.Player
 
         private void SetActualVisual()
         {
-            if (PlayerPrefsController.GetPlayerP3State())
+            if (PlayerPrefsController.GetP3State())
                 ChangeVisual(fifthVisual);
-            else if (PlayerPrefsController.GetPlayerP2State())
+            else if (PlayerPrefsController.GetP2State())
                 ChangeVisual(fourthVisual);
-            else if (PlayerPrefsController.GetPlayerWallJumpState())
+            else if (PlayerPrefsController.GetWallJumpState())
                 ChangeVisual(thirdVisual);
-            else if (PlayerPrefsController.GetPlayerDoubleJumpState())
+            else if (PlayerPrefsController.GetDoubleJumpState())
                 ChangeVisual(secondVisual);
             else
                 ChangeVisual(firstVisual);
