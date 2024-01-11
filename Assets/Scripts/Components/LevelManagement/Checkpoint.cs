@@ -9,7 +9,7 @@ namespace Components.LevelManagement
     {
         public void SavePosition()
         {
-            Vector2 lastPlayerPosition = PlayerPrefsController.GetPlayerPosition();
+            Vector2 lastPlayerPosition = PlayerPrefsController.GetPosition();
             if (Vector2.Distance(PlayerController.Instance.transform.position, lastPlayerPosition) < 3f)
                 return;
 

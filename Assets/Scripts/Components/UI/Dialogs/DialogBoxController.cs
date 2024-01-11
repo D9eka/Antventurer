@@ -27,7 +27,10 @@ namespace Components.UI.Dialogs
         public void ShowDialog(DialogData data, UnityEvent onStart, UnityEvent onFinish)
         {
             if (_container.activeSelf)
+            {
+                OnContinue();
                 return;
+            }
 
             onStart?.Invoke();
             _onFinishDialog = onFinish;

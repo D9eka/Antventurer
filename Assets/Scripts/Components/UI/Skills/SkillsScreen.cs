@@ -63,19 +63,19 @@ namespace Components.UI.Skills
 
         private void UpdateSkillVisuals()
         {
-            bool haveDoubleJumpSkill = PlayerPrefsController.GetPlayerDoubleJumpState();
+            bool haveDoubleJumpSkill = PlayerPrefsController.GetDoubleJumpState();
             ChangeStatus(_doubleJumpSkillVisual, haveDoubleJumpSkill);
 
-            bool haveJumpSkill = PlayerPrefsController.GetPlayerWallJumpState();
+            bool haveJumpSkill = PlayerPrefsController.GetWallJumpState();
             ChangeStatus(_wallJumpSkillVisual, haveJumpSkill);
 
-            bool haveP2Skill = PlayerPrefsController.GetPlayerP2State();
+            bool haveP2Skill = PlayerPrefsController.GetP2State();
             ChangeStatus(_p2SkillVisual, haveP2Skill);
 
-            bool haveP3Skill = PlayerPrefsController.GetPlayerP3State();
+            bool haveP3Skill = PlayerPrefsController.GetP3State();
             ChangeStatus(_p3SkillVisual, haveP3Skill);
 
-            bool haveFlightSkill = PlayerPrefsController.GetPlayerFlightState();
+            bool haveFlightSkill = PlayerPrefsController.GetFlightState();
             ChangeStatus(_flightSkillVisual, haveFlightSkill);
         }
 

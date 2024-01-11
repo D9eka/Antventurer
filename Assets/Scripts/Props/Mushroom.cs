@@ -15,11 +15,11 @@ namespace Props
         {
             bool isSkillUnlocked = _unlocksSkill switch
             {
-                Skill.DoubleJump => PlayerPrefsController.GetPlayerDoubleJumpState(),
-                Skill.WallJump => PlayerPrefsController.GetPlayerWallJumpState(),
-                Skill.P2 => PlayerPrefsController.GetPlayerP2State(),
-                Skill.P3 => PlayerPrefsController.GetPlayerP3State(),
-                Skill.Flight => PlayerPrefsController.GetPlayerFlightState(),
+                Skill.DoubleJump => PlayerPrefsController.GetDoubleJumpState(),
+                Skill.WallJump => PlayerPrefsController.GetWallJumpState(),
+                Skill.P2 => PlayerPrefsController.GetP2State(),
+                Skill.P3 => PlayerPrefsController.GetP3State(),
+                Skill.Flight => PlayerPrefsController.GetFlightState(),
                 _ => true
             };
             gameObject.SetActive(!isSkillUnlocked);

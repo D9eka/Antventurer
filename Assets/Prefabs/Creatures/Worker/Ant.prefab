@@ -208,7 +208,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1581869773764044117}
-  - component: {fileID: 7055581581982418934}
   - component: {fileID: 2256798084372776916}
   - component: {fileID: 5244061966189697622}
   m_Layer: 0
@@ -236,29 +235,6 @@ Transform:
   - {fileID: 3601982958382789262}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7055581581982418934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1795929044505782960}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c1e3334345195d4e873902feb8d6e29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _dialogBox: {fileID: 626012353468538475}
-  _onStart:
-    m_PersistentCalls:
-      m_Calls: []
-  _onFinish:
-    m_PersistentCalls:
-      m_Calls: []
-  _mode: 1
-  _bound:
-    _sentences: []
-  _external: {fileID: 11400000, guid: 7d0306c0773994d48b7888bca1c76f26, type: 2}
 --- !u!114 &2256798084372776916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,9 +250,9 @@ MonoBehaviour:
   _action:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7055581581982418934}
-        m_TargetAssemblyTypeName: Components.UI.Dialogs.ShowDialogComponent, Assembly-CSharp
-        m_MethodName: Show
+      - m_Target: {fileID: 5244061966189697622}
+        m_TargetAssemblyTypeName: Creatures.AntWorker, Assembly-CSharp
+        m_MethodName: ShowDialog
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -298,6 +274,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 836d03585bba108489b447ac530b96a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dialogBoxController: {fileID: 626012353468538475}
+  _startDialog: {fileID: 11400000, guid: 7d0306c0773994d48b7888bca1c76f26, type: 2}
+  _onStartStartDialog:
+    m_PersistentCalls:
+      m_Calls: []
+  _onFinishStartDialog:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5244061966189697622}
+        m_TargetAssemblyTypeName: Creatures.AntWorker, Assembly-CSharp
+        m_MethodName: ChangeFirstTalkState
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _exitDialog: {fileID: 11400000, guid: c96213f4e6d3e73438db992b1d0aba1e, type: 2}
+  _onStartExitDialog:
+    m_PersistentCalls:
+      m_Calls: []
+  _onFinishExitDialog:
+    m_PersistentCalls:
+      m_Calls: []
+  _finalDialog: {fileID: 11400000, guid: c889c61a72a52a447b076991f865c234, type: 2}
+  _onStartFinalDialog:
+    m_PersistentCalls:
+      m_Calls: []
+  _onFinishFinalDialog:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2073066150190788678
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +370,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -1039,7 +1049,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -15, y: 45}
-  m_SizeDelta: {x: 54.09, y: 8.01}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &7388714179053538929
 CanvasRenderer:
@@ -1208,10 +1218,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2052217130881192164}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 27.045, y: -4.005}
-  m_SizeDelta: {x: 54.09, y: 8.01}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 27.045, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3359608805358055211
 CanvasRenderer:

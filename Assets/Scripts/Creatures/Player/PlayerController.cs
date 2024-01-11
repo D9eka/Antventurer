@@ -64,6 +64,7 @@ namespace Creatures.Player
 
         private bool p3SkillEnabled;
 
+        private const string BIRTH_KEY = "birth";
         private const string DOUBLE_JUMP_KEY = "double-jump";
         private const string IS_ON_WALL_KEY = "is-on-wall";
         private const string FLY_KEY = "allow-flying";
@@ -71,6 +72,8 @@ namespace Creatures.Player
         public bool Active { get; private set; }
 
         public static PlayerController Instance { get; private set; }
+
+        public EventHandler OnBirth;
 
         public EventHandler<OnPlayerGroundedEventArgs> OnPlayerGrounded;
         public class OnPlayerGroundedEventArgs : EventArgs
@@ -96,9 +99,11 @@ namespace Creatures.Player
 
             playerAnimator = GetComponent<PlayerVisual>();
             mana = GetComponent<ManaComponent>();
-            if(PlayerPrefsController.TryGetPlayerData(out PlayerData data))
-                LoadData(data);
-            _animator.SetBool(FLY_KEY, PlayerPrefsController.GetPlayerFlightState());
+            LoadData(PlayerPrefsController.GetPlayerData());
+
+            if(PlayerPrefsController.GetFirstStartState())
+                _animator.SetTrigger(BIRTH_KEY);
+            _animator.SetBool(FLY_KEY, PlayerPrefsController.GetFlightState());
             defaultGravityScale = _rigidbody.gravityScale;
             Active = true;
         }
@@ -123,6 +128,8 @@ namespace Creatures.Player
             inputReader.OnPlayerUseP2Skill += PlayerController_OnPlayerUseP2Skill;
             inputReader.OnPlayerUseP3Skill += PlayerController_OnPlayerUseP3Skill;
             #endregion
+
+            Debug.Log(PlayerPrefsController.GetFirstStartState()); 
         }
 
         #region Events
@@ -346,7 +353,8 @@ namespace Creatures.Player
             return new PlayerData(SceneManager.GetActiveScene().name, transform.position, transform.localScale.x,
                                   manaData.mana, manaData.maxMana,
                                   GetPlayerProgress(), _allowDoubleJump, _allowWallJump, 
-                                  _allowP2Skill, _allowP3Skill, _allowFlight);
+                                  _allowP2Skill, _allowP3Skill, _allowFlight,
+                                  false, true);
         }
 
         private float GetPlayerProgress()
@@ -375,19 +383,22 @@ namespace Creatures.Player
         public bool P2State { get; private set; }
         public bool P3State { get; private set; }
         public bool FlightState { get; private set; }
+        public bool FirstStart { get; private set; }
+        public bool TalkWithWorker { get; private set; }
 
         private const float DEFAULT_MANA = 100f;
         private const float DEFAULT_MAX_MANA = 100f;
 
         public PlayerData(string location, Vector2 position, float scale = 1f, float mana = DEFAULT_MANA, float maxMana = DEFAULT_MAX_MANA,
-                          float progress = 0, bool doubleJumpState = true, bool wallJumpState = true,
-                          bool p2State = true, bool p3State = true, bool flightState = false)
+                          float progress = 0, bool doubleJumpState = false, bool wallJumpState = false,
+                          bool p2State = false, bool p3State = false, bool flightState = false,
+                          bool firstStart = true, bool talkWithWorker = false)
         {
             Location = location;
             Position = position;
             Scale = scale;
 
-            Mana = 100f;
+            Mana = mana;
             MaxMana = maxMana;
 
             Progress = progress;
@@ -396,6 +407,9 @@ namespace Creatures.Player
             P2State = p2State;
             P3State = p3State;
             FlightState = flightState;
+
+            FirstStart = firstStart;
+            TalkWithWorker = talkWithWorker;
         }
     }
 }

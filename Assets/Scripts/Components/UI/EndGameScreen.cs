@@ -23,7 +23,7 @@ public class EndGameScreen : MonoBehaviour
         if (_backgroundMusic != null)
             AudioHandler.Instance.PlayMusic(_backgroundMusic);
 
-        float playerProgress = PlayerPrefsController.GetPlayerProgress();
+        float playerProgress = PlayerPrefsController.GetProgress();
         _playerProgress.text = $"{playerProgress}%";
         LayoutRebuilder.ForceRebuildLayoutImmediate(_playerProgress.transform.parent.GetComponent<RectTransform>());
 

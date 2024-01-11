@@ -31,8 +31,7 @@ namespace Components.UI
 
             PlayerController.Instance.GetComponent<ManaComponent>().OnValueChange += HUD_OnValueChange;
 
-            if (PlayerPrefsController.TryGetPlayerData(out PlayerData data))
-                LoadData(data);
+            LoadData(PlayerPrefsController.GetPlayerData());
 
 
 

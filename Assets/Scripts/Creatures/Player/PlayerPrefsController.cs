@@ -7,35 +7,35 @@ namespace Creatures.Player
     public static class PlayerPrefsController
     {
         #region Player
-        private const string PLAYER_LOCATION = "PlayerLocation";
-        private const string PLAYER_POSITION_X = "PlayerPosX";
-        private const string PLAYER_POSITION_Y = "PlayerPosY";
-        private const string PLAYER_SCALE = "PlayerScale";
+        private const string LOCATION = "PlayerLocation";
+        private const string POSITION_X = "PlayerPosX";
+        private const string POSITION_Y = "PlayerPosY";
+        private const string SCALE = "PlayerScale";
 
-        private const string PLAYER_MANA = "PlayerMana";
-        private const string PLAYER_MAX_MANA = "PlayerMaxMana";
+        private const string MANA = "PlayerMana";
+        private const string MAX_MANA = "PlayerMaxMana";
 
-        private const string PLAYER_PROGRESS = "PlayerProgress";
-        private const string PLAYER_ALLOW_DOUBLE_JUMP = "PlayerAllowDoubleJump";
-        private const string PLAYER_ALLOW_WALL_JUMP = "PlayerAllowWallJump";
-        private const string PLAYER_ALLOW_P2_SKILL = "PlayerAllowP2Skill";
-        private const string PLAYER_ALLOW_P3_SKILL = "PlayerAllowP3Skill";
-        private const string PLAYER_ALLOW_FLIGHT = "PlayerAllowFlight";
+        private const string PROGRESS = "PlayerProgress";
+        private const string ALLOW_DOUBLE_JUMP = "PlayerAllowDoubleJump";
+        private const string ALLOW_WALL_JUMP = "PlayerAllowWallJump";
+        private const string ALLOW_P2_SKILL = "PlayerAllowP2Skill";
+        private const string ALLOW_P3_SKILL = "PlayerAllowP3Skill";
+        private const string ALLOW_FLIGHT = "PlayerAllowFlight";
 
-        public static bool TryGetPlayerData(out PlayerData data)
+        private const string FIRST_START = "PlayerFirstStart";
+        private static Vector2 firstStartPos = new Vector2(3.319f, 0.8893859f);
+        private const string TALK_WITH_WORKER = "PlayerTalkWithWorker";
+
+        public static PlayerData GetPlayerData()
         {
-            //GetDataFromServer();
-
-            if (!PlayerPrefs.HasKey(PLAYER_LOCATION) || !PlayerPrefs.HasKey(PLAYER_MAX_MANA))
-            {
-                data = new PlayerData();
-                return false;
-            }
-            data = new PlayerData(GetPlayerLocation(), GetPlayerPosition(), GetPlayerScale(),
-                                  GetPlayerMana(), GetPlayerMaxMana(), 
-                                  GetPlayerProgress(), GetPlayerDoubleJumpState(), GetPlayerWallJumpState(), 
-                                  GetPlayerP2State(), GetPlayerP3State(), GetPlayerFlightState());
-            return true;
+            if (!PlayerPrefs.HasKey(FIRST_START))
+                return new PlayerData(GetLocation(), GetPosition());
+            else
+                return new PlayerData(GetLocation(), GetPosition(), GetScale(),
+                                      GetMana(), GetMaxMana(),
+                                      GetProgress(), GetDoubleJumpState(), GetWallJumpState(),
+                                      GetP2State(), GetP3State(), GetFlightState(),
+                                      GetFirstStartState(), GetTalkWithWorkerState());
         }
         /*
         public static void GetDataFromServer()
@@ -54,23 +54,26 @@ namespace Creatures.Player
                 return;
 
             PlayerData data = PlayerController.Instance.SaveData();
-            SavePlayerData(data);
+            SaveData(data);
         }
 
-        public static void SavePlayerData(PlayerData data)
+        public static void SaveData(PlayerData data)
         {
-            SetPlayerPosition(data.Position.Value);
-            SetPlayerScale(data.Scale);
+            SetPosition(data.Position.Value);
+            SetScale(data.Scale);
 
-            SetPlayerMana(data.Mana);
-            SetPlayerMaxMana(data.MaxMana);
+            SetMana(data.Mana);
+            SetMaxMana(data.MaxMana);
 
-            SetPlayerProgress(data.Progress);
-            SetPlayerDoubleJumpState(data.DoubleJumpState);
-            SetPlayerWallJumpState(data.WallJumpState);
-            SetPlayerP2State(data.P2State);
-            SetPlayerP3State(data.P3State);
-            SetPlayerFlightState(data.FlightState);
+            SetProgress(data.Progress);
+            SetDoubleJumpState(data.DoubleJumpState);
+            SetWallJumpState(data.WallJumpState);
+            SetP2State(data.P2State);
+            SetP3State(data.P3State);
+            SetFlightState(data.FlightState);
+
+            SetFirstStartState(data.FirstStart);
+            SetTalkWithWorkerState(data.TalkWithWorker);
 
             string jsonString = JsonUtility.ToJson(data);
             //SaveExtern(jsonString);
@@ -102,145 +105,169 @@ namespace Creatures.Player
         #endregion
 
         #region Position
-        public static Vector2 GetPlayerPosition()
+        public static Vector2 GetPosition()
         {
-            return new Vector2(PlayerPrefs.GetFloat(PLAYER_POSITION_X), PlayerPrefs.GetFloat(PLAYER_POSITION_Y));
+            return new Vector2(PlayerPrefs.GetFloat(POSITION_X, firstStartPos.x), PlayerPrefs.GetFloat(POSITION_Y, firstStartPos.y));
         }
 
-        public static void SetPlayerPosition(Vector2 position)
+        public static void SetPosition(Vector2 position)
         {
-            PlayerPrefs.SetFloat(PLAYER_POSITION_X, position.x);
-            PlayerPrefs.SetFloat(PLAYER_POSITION_Y, position.y);
+            PlayerPrefs.SetFloat(POSITION_X, position.x);
+            PlayerPrefs.SetFloat(POSITION_Y, position.y);
         }
         #endregion
 
         #region Scale
-        public static float GetPlayerScale()
+        public static float GetScale()
         {
-            return GetFloat(PLAYER_SCALE);
+            return GetFloat(SCALE, 1f);
         }
 
-        public static void SetPlayerScale(float scale)
+        public static void SetScale(float scale)
         {
-            SetFloat(PLAYER_SCALE, scale);
+            SetFloat(SCALE, scale);
         }
         #endregion
 
         #region Location
-        public static string GetPlayerLocation()
+        public static string GetLocation()
         {
-            return GetString(PLAYER_LOCATION);
+            return GetString(LOCATION);
         }
         public static void SetPlayerLocation(string location)
         {
-            SetString(PLAYER_LOCATION, location);
+            SetString(LOCATION, location);
         }
         #endregion
 
         #region Mana
-        public static float GetPlayerMana()
+        public static float GetMana()
         {
-            return GetFloat(PLAYER_MANA);
+            return GetFloat(MANA);
         }
 
-        public static void SetPlayerMana(float mana)
+        public static void SetMana(float mana)
         {
-            SetFloat(PLAYER_MANA, mana);
+            SetFloat(MANA, mana);
         }
         #endregion
 
         #region MaxMana
-        public static float GetPlayerMaxMana()
+        public static float GetMaxMana()
         {
-            return GetFloat(PLAYER_MAX_MANA);
+            return GetFloat(MAX_MANA);
         }
 
-        public static void SetPlayerMaxMana(float mana)
+        public static void SetMaxMana(float mana)
         {
-            SetFloat(PLAYER_MAX_MANA, mana);
+            SetFloat(MAX_MANA, mana);
         }
         #endregion
 
         #region Progress
-        public static float GetPlayerProgress()
+        public static float GetProgress()
         {
-            return GetFloat(PLAYER_PROGRESS);
+            return GetFloat(PROGRESS);
         }
 
-        public static void SetPlayerProgress(float progress)
+        public static void SetProgress(float progress)
         {
-            SetFloat(PLAYER_PROGRESS, progress);
+            SetFloat(PROGRESS, progress);
         }
         #endregion
 
         #region DoubleJump
-        public static bool GetPlayerDoubleJumpState()
+        public static bool GetDoubleJumpState()
         {
-            return GetBool(PLAYER_ALLOW_DOUBLE_JUMP);
+            return GetBool(ALLOW_DOUBLE_JUMP);
         }
 
-        public static void SetPlayerDoubleJumpState(bool state)
+        public static void SetDoubleJumpState(bool state)
         {
-            SetBool(PLAYER_ALLOW_DOUBLE_JUMP, state);
+            SetBool(ALLOW_DOUBLE_JUMP, state);
         }
         #endregion
 
         #region WallJump
-        public static bool GetPlayerWallJumpState()
+        public static bool GetWallJumpState()
         {
-            return GetBool(PLAYER_ALLOW_WALL_JUMP);
+            return GetBool(ALLOW_WALL_JUMP);
         }
 
-        public static void SetPlayerWallJumpState(bool state)
+        public static void SetWallJumpState(bool state)
         {
-            SetBool(PLAYER_ALLOW_WALL_JUMP, state);
+            SetBool(ALLOW_WALL_JUMP, state);
         }
         #endregion
 
         #region P2
-        public static bool GetPlayerP2State()
+        public static bool GetP2State()
         {
-            return GetBool(PLAYER_ALLOW_P2_SKILL);
+            return GetBool(ALLOW_P2_SKILL);
         }
 
-        public static void SetPlayerP2State(bool state)
+        public static void SetP2State(bool state)
         {
-            SetBool(PLAYER_ALLOW_P2_SKILL, state);
+            SetBool(ALLOW_P2_SKILL, state);
         }
         #endregion
 
         #region P3
-        public static bool GetPlayerP3State()
+        public static bool GetP3State()
         {
-            return GetBool(PLAYER_ALLOW_P3_SKILL);
+            return GetBool(ALLOW_P3_SKILL);
         }
 
-        public static void SetPlayerP3State(bool state)
+        public static void SetP3State(bool state)
         {
-            SetBool(PLAYER_ALLOW_P3_SKILL, state);
+            SetBool(ALLOW_P3_SKILL, state);
         }
         #endregion
 
         #region Flight
-        public static bool GetPlayerFlightState()
+        public static bool GetFlightState()
         {
-            return GetBool(PLAYER_ALLOW_FLIGHT);
+            return GetBool(ALLOW_FLIGHT);
         }
 
-        public static void SetPlayerFlightState(bool state)
+        public static void SetFlightState(bool state)
         {
-            SetBool(PLAYER_ALLOW_FLIGHT, state);
+            SetBool(ALLOW_FLIGHT, state);
+        }
+        #endregion
+
+        #region FirstStart
+        public static bool GetFirstStartState()
+        {
+            return GetBool(FIRST_START, true);
+        }
+
+        public static void SetFirstStartState(bool state)
+        {
+            SetBool(FIRST_START, state);
+        }
+        #endregion
+
+        #region TalkWithWorker
+        public static bool GetTalkWithWorkerState()
+        {
+            return GetBool(TALK_WITH_WORKER);
+        }
+
+        public static void SetTalkWithWorkerState(bool state)
+        {
+            SetBool(TALK_WITH_WORKER, state);
         }
         #endregion
 
         #region Bool
-        private static bool GetBool(string key)
+        private static bool GetBool(string key, bool defaultValue = false)
         {
             if (PlayerPrefs.HasKey(key))
             {
                 return PlayerPrefs.GetInt(key) == 1;
             }
-            return false;
+            return defaultValue;
         }
 
         private static void SetBool(string key, bool state) 
@@ -274,19 +301,22 @@ namespace Creatures.Player
 
         public static void CleanPlayerInfo()
         {
-            PlayerPrefs.DeleteKey(PLAYER_POSITION_X);
-            PlayerPrefs.DeleteKey(PLAYER_POSITION_Y);
-            PlayerPrefs.DeleteKey(PLAYER_SCALE);
-            PlayerPrefs.DeleteKey(PLAYER_LOCATION);
+            PlayerPrefs.DeleteKey(POSITION_X);
+            PlayerPrefs.DeleteKey(POSITION_Y);
+            PlayerPrefs.DeleteKey(SCALE);
+            PlayerPrefs.DeleteKey(LOCATION);
 
-            PlayerPrefs.DeleteKey(PLAYER_MANA);
-            PlayerPrefs.DeleteKey(PLAYER_MAX_MANA);
+            PlayerPrefs.DeleteKey(MANA);
+            PlayerPrefs.DeleteKey(MAX_MANA);
 
-            PlayerPrefs.DeleteKey(PLAYER_ALLOW_DOUBLE_JUMP);
-            PlayerPrefs.DeleteKey(PLAYER_ALLOW_WALL_JUMP);
-            PlayerPrefs.DeleteKey(PLAYER_ALLOW_P2_SKILL);
-            PlayerPrefs.DeleteKey(PLAYER_ALLOW_P3_SKILL);
-            PlayerPrefs.DeleteKey(PLAYER_ALLOW_FLIGHT);
+            PlayerPrefs.DeleteKey(ALLOW_DOUBLE_JUMP);
+            PlayerPrefs.DeleteKey(ALLOW_WALL_JUMP);
+            PlayerPrefs.DeleteKey(ALLOW_P2_SKILL);
+            PlayerPrefs.DeleteKey(ALLOW_P3_SKILL);
+            PlayerPrefs.DeleteKey(ALLOW_FLIGHT);
+
+            PlayerPrefs.DeleteKey(FIRST_START);
+            PlayerPrefs.DeleteKey(TALK_WITH_WORKER);
         }
     }
 }

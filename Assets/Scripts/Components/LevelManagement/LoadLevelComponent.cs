@@ -36,13 +36,12 @@ namespace Components.LevelManagement
             switch(_mode)
             {
                 case LoadingMode.Manually:
-                    PlayerPrefsController.SetPlayerPosition(_position);
-                    PlayerPrefsController.SetPlayerScale(_invertScale ? -1 : 1);
+                    PlayerPrefsController.SetPosition(_position);
+                    PlayerPrefsController.SetScale(_invertScale ? -1 : 1);
                     PlayerPrefsController.SetPlayerLocation(_sceneName);
                     break;
                 case LoadingMode.FromSave:
-                    if (PlayerPrefsController.TryGetPlayerData(out PlayerData data))
-                        _sceneName = data.Location;
+                    _sceneName = PlayerPrefsController.GetLocation();
                     break;
                 case LoadingMode.ToMainMenu:
                     _sceneName = "MainMenu";

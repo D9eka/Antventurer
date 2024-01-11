@@ -23,13 +23,13 @@ public class PauseScreen : MonoBehaviour
 
     private void SetSkillButtonState()
     {
-        Debug.Log(PlayerPrefsController.GetPlayerDoubleJumpState());
-        _skillsButton.interactable = PlayerPrefsController.GetPlayerDoubleJumpState();
+        Debug.Log(PlayerPrefsController.GetDoubleJumpState());
+        _skillsButton.interactable = PlayerPrefsController.GetDoubleJumpState();
     }
 
     public void UpdateSlider()
     {
-        float value = PlayerPrefsController.GetPlayerProgress();
+        float value = PlayerPrefsController.GetProgress();
         _progressText.text = value.ToString() + '%';
         _progressSlider.value = value;
     }
