@@ -25,6 +25,7 @@ namespace Creatures
         protected const string IS_ON_GROUND_KEY = "is-on-ground";
         protected const string IS_RUNNING_KEY = "is-running";
         protected const string VERTICAL_VELOCITY_KEY = "vertical-velocity";
+        private const string DIE_KEY = "death";
 
         protected virtual void Awake()
         {
@@ -79,6 +80,11 @@ namespace Creatures
         public virtual void SetDirection(Vector2 direction)
         {
             _direction = direction;
+        }
+
+        public virtual void Die()
+        {
+            _animator.SetTrigger(DIE_KEY);
         }
     }
 }

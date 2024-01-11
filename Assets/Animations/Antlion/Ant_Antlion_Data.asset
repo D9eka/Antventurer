@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fceac8e29e8ca2748ae811053883605f, type: 3}
+  m_Name: Ant_Antlion_Data
+  m_EditorClassIdentifier: 
+  dataName: Ant_Antlion
+  dragonBonesJSON: {fileID: 4900000, guid: fced9392bab31234899967ecbbb65ee3, type: 3}
+  textureAtlas:
+  - textureAtlasJSON: {fileID: 4900000, guid: 4b1ea241c63684b4d888332d411a5c5a, type: 3}
+    texture: {fileID: 2800000, guid: 04287add26820b246b4d3039d08453ce, type: 3}
+    material: {fileID: 2100000, guid: e73e66cfd8945684bb7f87749af18cbe, type: 2}
+    uiMaterial: {fileID: 0}

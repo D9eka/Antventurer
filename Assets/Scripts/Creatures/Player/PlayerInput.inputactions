@@ -24,24 +24,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ChangeDoubleJumpState",
-                    "type": "Button",
-                    "id": "984e6f7a-1df4-422e-86bc-5652f3999014",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "ChangeWallJumpState",
-                    "type": "Button",
-                    "id": "c0864031-f7bf-481f-89e5-002b70704e12",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Pause",
                     "type": "Button",
                     "id": "ba94064e-b71f-46d2-85bc-2b1b03b24e90",
@@ -133,28 +115,6 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Interact",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9e8deb56-097e-4dbb-abbf-8c0c0e264f92",
-                    "path": "<Keyboard>/f10",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "ChangeDoubleJumpState",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "280c1088-c690-4f65-b7da-dffdcb8fafd6",
-                    "path": "<Keyboard>/f2",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "ChangeWallJumpState",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

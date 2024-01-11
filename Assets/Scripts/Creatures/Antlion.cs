@@ -1,6 +1,7 @@
 ﻿using Creatures;
 using Creatures.Enemy;
 using Creatures.Player;
+using DragonBones;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,9 +13,10 @@ namespace Assets.Scripts.Creatures
         [SerializeField] private Vector2 _creaturePos = Vector2.zero;
         [Space]
         [SerializeField] private Animator _groundAnimator;
-        [SerializeField] private Animator _lionAnimator;
+        [Space]
+        [SerializeField] private UnityArmatureComponent _lionArmature;
 
-        private const string ATTACK_KEY = "attack";
+        private const string ATTACK_KEY = "Antlion";
         private const string CREATURE_DEATH_KEY = "death-by-antlion";
 
         public void OnAttack(GameObject creature)
@@ -22,18 +24,19 @@ namespace Assets.Scripts.Creatures
             if (!creature.TryGetComponent(out Animator creatureAnimator))
                 return;
 
-            creature.transform.parent = transform;
-            _lionAnimator.transform.localScale = creature.transform.localScale;
+            creature.GetComponent<CapsuleCollider2D>().enabled = false;
+            creature.transform.parent.GetComponent<Rigidbody2D>().simulated = false;
+            creature.transform.parent.parent = transform;
             MoveCreature(creature.transform);
 
             _groundAnimator.SetTrigger(ATTACK_KEY);
-            _lionAnimator.SetTrigger(ATTACK_KEY);
+            _lionArmature.animation.Play(ATTACK_KEY, 1);
             creatureAnimator.SetTrigger(CREATURE_DEATH_KEY);
         }
 
-        private void MoveCreature(Transform creature)
+        private void MoveCreature(UnityEngine.Transform creature)
         {
-            creature.position = _creaturePos;
+            creature.transform.parent.localPosition = _creaturePos;
         }
     }
 }

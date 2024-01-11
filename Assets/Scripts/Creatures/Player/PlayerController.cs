@@ -47,6 +47,7 @@ namespace Creatures.Player
         [Header("Flight")]
         [SerializeField] private bool _allowFlight;
 
+        private PlayerAnimator playerAnimator;
         private ManaComponent mana;
 
         private float jumpTimeCounter;
@@ -90,6 +91,8 @@ namespace Creatures.Player
                 Destroy(Instance);
             }
             Instance = this;
+
+            playerAnimator = GetComponent<PlayerAnimator>();
             mana = GetComponent<ManaComponent>();
             if(PlayerPrefsController.TryGetPlayerData(out PlayerData data))
                 LoadData(data);
@@ -136,6 +139,13 @@ namespace Creatures.Player
             _enemyCheck.Check();
         }
 
+        private void PlayerController_OnPlayerUseP3Skill(object sender, bool e)
+        {
+            if (!_allowP3Skill)
+                return;
+            p3SkillEnabled = e;
+        }
+
         public void Recruit(GameObject go)
         {
             if (!go.transform.parent.TryGetComponent(out EnemyController enemy))
@@ -145,13 +155,6 @@ namespace Creatures.Player
             recruitedEnemies.Add(enemy);
             enemy.Recruit();
             mana.ModifyMana(_p2SkillManaExprense);
-        }
-
-        private void PlayerController_OnPlayerUseP3Skill(object sender, bool e)
-        {
-            if (!_allowP3Skill)
-                return;
-            p3SkillEnabled = e;
         }
 
         public void OrderToAttack()
