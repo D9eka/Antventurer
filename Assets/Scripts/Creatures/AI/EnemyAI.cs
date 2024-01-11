@@ -30,6 +30,8 @@ namespace Creatures.Enemy
         [Header("State: FollowThePlayer")]
         [SerializeField] private float _minDistanceToPlayer = 1.5f;
         [SerializeField] private float _maxDistanceToPlayer = 3f;
+        [Header("State: FindEnemy")]
+        [SerializeField] private float _maxDistanceToEnemy = 10f;
 
         private Coroutine _current;
         private float _missPlayerCounter;
@@ -47,6 +49,8 @@ namespace Creatures.Enemy
             GoToPlayer,
             AttackPlayer,
             FollowThePlayer,
+            FindEnemy,
+            GoToEnemy,
             AttackEnemy,
             Attacked
         }
@@ -89,7 +93,16 @@ namespace Creatures.Enemy
 
         private void EnemyAi_OnOrderToAttack(object sender, EventArgs e)
         {
-            StartState(State.AttackEnemy);
+            if (_state == State.FollowThePlayer)
+                FindEnemy();
+        }
+
+        private void FindEnemy()
+        {
+            if(Enemies.TryFindNearestEnemy(transform, _maxDistanceToEnemy, out Transform nearestEnemy))
+            { 
+
+            }
         }
 
         public void OnPlayerInVision(GameObject gameObject)
@@ -216,9 +229,30 @@ namespace Creatures.Enemy
                 yield return null;
             }
         }
+        private IEnumerator GoToEnemy(Transform enemy)
+        {
+            _navigation.SetTarget(enemy.position, true);
+            _navigation.followEnabled = true;
+            while (enabled)
+            {
+                if(enemy == null)
+                {
+                    StartState(State.FollowThePlayer);
+                }
+
+                if (_canAttack.IsTouchingLayer)
+                {
+                    StartState(State.AttackEnemy);
+                }
+                yield return null;
+            }
+        }
 
         private IEnumerator AttackEnemy()
         {
+            _navigation.followEnabled = false;
+            _enemy.Attack();
+            _enemy.Die();
             yield return null;
         }
 

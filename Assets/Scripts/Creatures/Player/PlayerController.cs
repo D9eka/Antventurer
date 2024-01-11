@@ -128,8 +128,6 @@ namespace Creatures.Player
             inputReader.OnPlayerUseP2Skill += PlayerController_OnPlayerUseP2Skill;
             inputReader.OnPlayerUseP3Skill += PlayerController_OnPlayerUseP3Skill;
             #endregion
-
-            Debug.Log(PlayerPrefsController.GetFirstStartState()); 
         }
 
         #region Events
