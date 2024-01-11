@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fceac8e29e8ca2748ae811053883605f, type: 3}
+  m_Name: Soldier_Data
+  m_EditorClassIdentifier: 
+  dataName: Ant_Solder
+  dragonBonesJSON: {fileID: 4900000, guid: 07ece375bdec55542b6eecc0b7990746, type: 3}
+  textureAtlas:
+  - textureAtlasJSON: {fileID: 4900000, guid: 78eb72dd77c6d55418a342466ade2433, type: 3}
+    texture: {fileID: 2800000, guid: bddd90f86090e9a4c8a91d16c81f2a64, type: 3}
+    material: {fileID: 2100000, guid: 1f25cae623e8e5045876ad3d65440f8a, type: 2}
+    uiMaterial: {fileID: 0}

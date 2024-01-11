@@ -47,6 +47,7 @@ namespace Creatures.Player
         [Header("Flight")]
         [SerializeField] private bool _allowFlight;
 
+        private PlayerAnimator playerAnimator;
         private ManaComponent mana;
 
         private float jumpTimeCounter;
@@ -90,6 +91,8 @@ namespace Creatures.Player
                 Destroy(Instance);
             }
             Instance = this;
+
+            playerAnimator = GetComponent<PlayerAnimator>();
             mana = GetComponent<ManaComponent>();
             if(PlayerPrefsController.TryGetPlayerData(out PlayerData data))
                 LoadData(data);
