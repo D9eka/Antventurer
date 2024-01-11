@@ -47,7 +47,7 @@ namespace Creatures.Player
         [Header("Flight")]
         [SerializeField] private bool _allowFlight;
 
-        private PlayerAnimator playerAnimator;
+        private PlayerVisual playerAnimator;
         private ManaComponent mana;
 
         private float jumpTimeCounter;
@@ -66,6 +66,7 @@ namespace Creatures.Player
 
         private const string DOUBLE_JUMP_KEY = "double-jump";
         private const string IS_ON_WALL_KEY = "is-on-wall";
+        private const string FLY_KEY = "allow-flying";
 
         public bool Active { get; private set; }
 
@@ -78,6 +79,7 @@ namespace Creatures.Player
         }
 
         public EventHandler<Skill> OnUnlockSkill;
+        public EventHandler<Skill> OnChangeVisual;
 
         public EventHandler<GameObject> OnRecruitEnemy;
         public EventHandler OnOrderToAttack;
@@ -92,11 +94,11 @@ namespace Creatures.Player
             }
             Instance = this;
 
-            playerAnimator = GetComponent<PlayerAnimator>();
+            playerAnimator = GetComponent<PlayerVisual>();
             mana = GetComponent<ManaComponent>();
             if(PlayerPrefsController.TryGetPlayerData(out PlayerData data))
                 LoadData(data);
-
+            _animator.SetBool(FLY_KEY, PlayerPrefsController.GetPlayerFlightState());
             defaultGravityScale = _rigidbody.gravityScale;
             Active = true;
         }
@@ -288,6 +290,7 @@ namespace Creatures.Player
 
             _allowDoubleJump = true;
             PlayerPrefsController.SavePlayerData();
+            OnChangeVisual?.Invoke(this, Skill.DoubleJump);
             OnUnlockSkill?.Invoke(this, Skill.DoubleJump);
         }
         public void UnlockWallJump()
@@ -297,6 +300,7 @@ namespace Creatures.Player
 
             _allowWallJump = true;
             PlayerPrefsController.SavePlayerData();
+            OnChangeVisual?.Invoke(this, Skill.WallJump);
             OnUnlockSkill?.Invoke(this, Skill.WallJump);
         }
         public void UnlockP2()
@@ -306,6 +310,7 @@ namespace Creatures.Player
 
             _allowP2Skill = true;
             PlayerPrefsController.SavePlayerData();
+            OnChangeVisual?.Invoke(this, Skill.P2);
             OnUnlockSkill?.Invoke(this, Skill.P2);
         }
         public void UnlockP3()
@@ -315,6 +320,7 @@ namespace Creatures.Player
 
             _allowP3Skill = true;
             PlayerPrefsController.SavePlayerData();
+            OnChangeVisual?.Invoke(this, Skill.P3);
             OnUnlockSkill?.Invoke(this, Skill.P3);
         }
         public void UnlockFlight()
@@ -324,6 +330,7 @@ namespace Creatures.Player
 
             _allowFlight = true;
             PlayerPrefsController.SavePlayerData();
+            OnChangeVisual?.Invoke(this, Skill.Flight);
             OnUnlockSkill?.Invoke(this, Skill.Flight);
         }
         #endregion
@@ -380,7 +387,7 @@ namespace Creatures.Player
             Position = position;
             Scale = scale;
 
-            Mana = mana;
+            Mana = 100f;
             MaxMana = maxMana;
 
             Progress = progress;

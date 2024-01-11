@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 540013616072357134}
   - component: {fileID: 4716255053683414513}
   - component: {fileID: -2876856748457678196}
-  - component: {fileID: 4282945517315028043}
+  - component: {fileID: 5124105949682246061}
   m_Layer: 6
   m_Name: Mushroom
   m_TagString: Interactable
@@ -153,10 +153,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4282945517315028043}
-        m_TargetAssemblyTypeName: XYZ.Components.GoBased.DestroyObjectComponent,
-          Assembly-CSharp
-        m_MethodName: DestroyObject
+      - m_Target: {fileID: 599290854687163881}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5124105949682246061}
+        m_TargetAssemblyTypeName: Props.Mushroom, Assembly-CSharp
+        m_MethodName: UnlockSkill
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -166,7 +177,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4282945517315028043
+--- !u!114 &5124105949682246061
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -175,7 +186,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 599290854687163881}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba62ac8ba21846b488d70f6960276035, type: 3}
+  m_Script: {fileID: 11500000, guid: 5df76648bd2c1b7409dc608915d63bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectToDestroy: {fileID: 599290854687163881}
+  _unlocksSkill: 0

@@ -1142,11 +1142,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _content: {fileID: 8468736687393559738}
-  _doubleJumpSkillData: {fileID: 11400000, guid: 0d3d9d7596ee2684c99f97fde3b77836, type: 2}
-  _wallJumpSkillData: {fileID: 11400000, guid: d0771d0c4351e7346a434b2f3d592cc5, type: 2}
-  _p2SkillData: {fileID: 11400000, guid: ea84f054b9d160c46b3c54a37dd24075, type: 2}
-  _p3SkillData: {fileID: 11400000, guid: 515397c024df9fb4e949fa30784bca61, type: 2}
-  _flightSkillData: {fileID: 11400000, guid: fe8314c199c7e4645a525b24b476655e, type: 2}
+  _doubleJumpSkillDef: {fileID: 11400000, guid: 0d3d9d7596ee2684c99f97fde3b77836, type: 2}
+  _wallJumpSkillDef: {fileID: 11400000, guid: d0771d0c4351e7346a434b2f3d592cc5, type: 2}
+  _p2SkillDef: {fileID: 11400000, guid: ea84f054b9d160c46b3c54a37dd24075, type: 2}
+  _p3SkillDef: {fileID: 11400000, guid: 515397c024df9fb4e949fa30784bca61, type: 2}
+  _flightSkillDef: {fileID: 11400000, guid: fe8314c199c7e4645a525b24b476655e, type: 2}
 --- !u!1 &7325688385674109437
 GameObject:
   m_ObjectHideFlags: 0

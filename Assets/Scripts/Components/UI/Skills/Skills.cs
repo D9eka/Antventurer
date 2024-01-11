@@ -10,11 +10,11 @@ namespace Components.UI.Skills
         [SerializeField] private SkillsContent _content;
         [Space]
         [Header("Skills Def")]
-        [SerializeField] private SkillDef _doubleJumpSkillData;
-        [SerializeField] private SkillDef _wallJumpSkillData;
-        [SerializeField] private SkillDef _p2SkillData;
-        [SerializeField] private SkillDef _p3SkillData;
-        [SerializeField] private SkillDef _flightSkillData;
+        [SerializeField] private SkillDef _doubleJumpSkillDef;
+        [SerializeField] private SkillDef _wallJumpSkillDef;
+        [SerializeField] private SkillDef _p2SkillDef;
+        [SerializeField] private SkillDef _p3SkillDef;
+        [SerializeField] private SkillDef _flightSkillDef;
 
         private const string SCREEN_ENABLED = "enabled";
 
@@ -43,11 +43,11 @@ namespace Components.UI.Skills
         {
             SkillData activeData = e switch
             {
-                Skill.DoubleJump => _doubleJumpSkillData.Data,
-                Skill.WallJump => _wallJumpSkillData.Data,
-                Skill.P2 => _p2SkillData.Data,
-                Skill.P3 => _p3SkillData.Data,
-                Skill.Flight => _flightSkillData.Data,
+                Skill.DoubleJump => _doubleJumpSkillDef.Data,
+                Skill.WallJump => _wallJumpSkillDef.Data,
+                Skill.P2 => _p2SkillDef.Data,
+                Skill.P3 => _p3SkillDef.Data,
+                Skill.Flight => _flightSkillDef.Data,
                 _ => throw new NotImplementedException()
             };
             _content.SetData(activeData);
