@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using InstantGamesBridge;
+using InstantGamesBridge.Common;
+using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
 
@@ -37,16 +39,22 @@ namespace Creatures.Player
                                       GetP2State(), GetP3State(), GetFlightState(),
                                       GetFirstStartState(), GetTalkWithWorkerState());
         }
-        /*
-        public static void GetDataFromServer()
+
+        public static bool GetDataFromServer()
         {
             string json = LoadExtern();
             if (json == null || json == "")
-                return;
+                return false;
 
             PlayerData data = JsonUtility.FromJson<PlayerData>(json);
-            SavePlayerData(data);
-        }*/
+            SaveData(data);
+            return true;
+        }
+
+        public static bool HaveData()
+        {
+            return PlayerPrefs.HasKey(FIRST_START);
+        }
 
         public static void SavePlayerData()
         {
@@ -75,17 +83,19 @@ namespace Creatures.Player
             SetFirstStartState(data.FirstStart);
             SetTalkWithWorkerState(data.TalkWithWorker);
 
-            string jsonString = JsonUtility.ToJson(data);
-            //SaveExtern(jsonString);
+
+            if (Bridge.platform.id == PlatformId.Yandex)
+            {
+                string jsonString = JsonUtility.ToJson(data);
+                SaveExtern(jsonString);
+            }
         }
 
-        /*
         [DllImport("__Internal")]
         private static extern void SaveExtern(string data);
 
         [DllImport("__Internal")]
         private static extern string LoadExtern();
-        */
 
         #endregion
 
