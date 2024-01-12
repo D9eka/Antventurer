@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.UI;
 
 namespace Components.UI.Dialogs
 {
@@ -31,6 +32,8 @@ namespace Components.UI.Dialogs
                 OnContinue();
                 return;
             }
+
+            LayoutRebuilder.ForceRebuildLayoutImmediate(GetComponent<RectTransform>());
 
             onStart?.Invoke();
             _onFinishDialog = onFinish;
