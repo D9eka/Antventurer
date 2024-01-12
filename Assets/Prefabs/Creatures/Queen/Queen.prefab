@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7706805961586421957}
   - component: {fileID: 1488847353031176070}
   - component: {fileID: 5193707428396793404}
+  - component: {fileID: 2275814207590674723}
   m_Layer: 0
   m_Name: GroundCheckCenter
   m_TagString: Untagged
@@ -83,6 +84,37 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 2240
+--- !u!114 &2275814207590674723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23410247203771520}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd4d276646850446b57a896833c1577, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Resin
+  _layer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4018362028956597935}
+        m_TargetAssemblyTypeName: Creatures.Creature, Assembly-CSharp
+        m_MethodName: Die
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &69049539727808479
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +334,7 @@ MonoBehaviour:
   _onOverlap:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4018362028956597935}
         m_TargetAssemblyTypeName: Creatures.Player.PlayerController, Assembly-CSharp
         m_MethodName: Recruit
         m_Mode: 0
@@ -5790,7 +5822,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5227061073428878542
 Transform:
   m_ObjectHideFlags: 0
@@ -6619,6 +6651,7 @@ GameObject:
   - component: {fileID: 9024821231105816509}
   - component: {fileID: 5413264321063384394}
   - component: {fileID: 3290104384595352662}
+  - component: {fileID: 3342760583288257362}
   m_Layer: 0
   m_Name: WallCheck
   m_TagString: Untagged
@@ -6691,6 +6724,37 @@ MonoBehaviour:
   _layer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &3342760583288257362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8679942685434803213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6dd4d276646850446b57a896833c1577, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tag: Resin
+  _layer:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4018362028956597935}
+        m_TargetAssemblyTypeName: Creatures.Creature, Assembly-CSharp
+        m_MethodName: Die
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8788791275783133456
 GameObject:
   m_ObjectHideFlags: 0

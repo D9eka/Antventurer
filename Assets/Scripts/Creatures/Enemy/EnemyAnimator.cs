@@ -40,6 +40,11 @@ namespace Assets.Scripts.Creatures.Enemy
         {
             armature.animation.Play(name, loopTime ? 0 : 1);
         }
+
+        public void Stop()
+        {
+            GetComponentInParent<EnemyController>().Stop();
+        }
     }
 
     [Serializable]

@@ -6,6 +6,7 @@ using Creatures.Enemy;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using static Components.UI.Skills.Skills;
 
@@ -343,6 +344,8 @@ namespace Creatures.Player
         public void Deactivate()
         {
             Active = false;
+            GetComponent<PlayerInput>().DeactivateInput();
+            _rigidbody.velocity = Vector2.zero;
         }
 
         public PlayerData SaveData()
