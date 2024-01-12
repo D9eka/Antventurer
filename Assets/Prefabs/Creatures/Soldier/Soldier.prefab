@@ -189,6 +189,7 @@ MonoBehaviour:
   _attackCoolDown: 1
   _minDistanceToPlayer: 1.5
   _maxDistanceToPlayer: 5
+  _maxDistanceToEnemy: 10
 --- !u!114 &8541990413668247197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,8 +233,8 @@ MonoBehaviour:
   _targetPrefab: {fileID: 8295186220606793942, guid: a73bcc3b00728c34aa1fe06d685ee0b6, type: 3}
   _target: {fileID: 0}
   _needJump: 0
-  _pathUpdateSeconds: 0
-  _threshold: 0
+  _pathUpdateSeconds: 0.5
+  _threshold: 1
   _points: []
   followEnabled: 1
 --- !u!1 &438307580709944053
