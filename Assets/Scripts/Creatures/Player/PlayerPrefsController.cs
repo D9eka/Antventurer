@@ -155,7 +155,7 @@ namespace Creatures.Player
         #region Mana
         public static float GetMana()
         {
-            return GetFloat(MANA);
+            return GetFloat(MANA, 100f);
         }
 
         public static void SetMana(float mana)
@@ -167,7 +167,7 @@ namespace Creatures.Player
         #region MaxMana
         public static float GetMaxMana()
         {
-            return GetFloat(MAX_MANA);
+            return GetFloat(MAX_MANA, 100f);
         }
 
         public static void SetMaxMana(float mana)
