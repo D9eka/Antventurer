@@ -18,6 +18,12 @@ EditorBuildSettings:
     path: "Assets/Scenes/Wintering\u0421hamber.unity"
     guid: 14b849f90d772cf4bb5557aac80a933c
   - enabled: 1
+    path: Assets/Scenes/Cowshed.unity
+    guid: b810add4b1cc442aabaf7f511f609b1f
+  - enabled: 1
+    path: Assets/Scenes/Exit.unity
+    guid: c4b61733d4f074bde8bdecdbecd2da41
+  - enabled: 1
     path: Assets/Scenes/End.unity
     guid: 20c3883be08c81840995a1bf4db5501f
   m_configObjects: {}

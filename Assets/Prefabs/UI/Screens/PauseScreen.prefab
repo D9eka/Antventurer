@@ -1381,7 +1381,7 @@ MonoBehaviour:
   _sceneName: MainMenu
   _position: {x: 0, y: 0}
   _invertScale: 0
-  _cleanPlayerPrefs: 1
+  _cleanPlayerPrefs: 0
 --- !u!1001 &5255720440109419813
 PrefabInstance:
   m_ObjectHideFlags: 0

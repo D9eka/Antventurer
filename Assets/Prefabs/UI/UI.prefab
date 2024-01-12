@@ -1528,25 +1528,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 7426278198150813736}
     m_Modifications:
-    - target: {fileID: 33952774440065355, guid: 1a1cebe88955449459f714c03028a811, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 33952774440065355, guid: 1a1cebe88955449459f714c03028a811, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 33952774440065355, guid: 1a1cebe88955449459f714c03028a811, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1106034662242687858, guid: 1a1cebe88955449459f714c03028a811, type: 3}
       propertyPath: m_Name
       value: LoadingScreen
-      objectReference: {fileID: 0}
-    - target: {fileID: 1750791689877437892, guid: 1a1cebe88955449459f714c03028a811, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2396560597845086918, guid: 1a1cebe88955449459f714c03028a811, type: 3}
       propertyPath: m_Pivot.x
@@ -1627,14 +1611,6 @@ PrefabInstance:
     - target: {fileID: 2396560597845086918, guid: 1a1cebe88955449459f714c03028a811, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8185048335615815933, guid: 1a1cebe88955449459f714c03028a811, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8185048335615815933, guid: 1a1cebe88955449459f714c03028a811, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
