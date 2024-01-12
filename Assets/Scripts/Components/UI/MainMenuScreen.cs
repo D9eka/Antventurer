@@ -20,10 +20,8 @@ namespace Components.UI
 
             Bridge.platform.SendMessage(PlatformMessage.GameReady);
             if (Bridge.platform.id == PlatformId.Yandex)
-                _contunueButton.SetActive(PlayerPrefsController.GetDataFromServer());
-            else
-                _contunueButton.SetActive(PlayerPrefsController.HaveData());
-            Debug.Log(PlayerPrefsController.HaveData());
+                PlayerPrefsController.LoadFromStorage();
+            _contunueButton.SetActive(PlayerPrefsController.HaveData());
         }
     }
 }

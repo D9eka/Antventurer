@@ -1,5 +1,6 @@
 ﻿using InstantGamesBridge;
 using InstantGamesBridge.Common;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
@@ -28,6 +29,8 @@ namespace Creatures.Player
         private static Vector2 firstStartPos = new Vector2(3.319f, 0.8893859f);
         private const string TALK_WITH_WORKER = "PlayerTalkWithWorker";
 
+        private const string STORAGE_KEY = "PlayerData";
+
         public static PlayerData GetPlayerData()
         {
             if (!PlayerPrefs.HasKey(FIRST_START))
@@ -38,17 +41,6 @@ namespace Creatures.Player
                                       GetProgress(), GetDoubleJumpState(), GetWallJumpState(),
                                       GetP2State(), GetP3State(), GetFlightState(),
                                       GetFirstStartState(), GetTalkWithWorkerState());
-        }
-
-        public static bool GetDataFromServer()
-        {
-            string json = LoadExtern();
-            if (json == null || json == "")
-                return false;
-
-            PlayerData data = JsonUtility.FromJson<PlayerData>(json);
-            SaveData(data);
-            return true;
         }
 
         public static bool HaveData()
@@ -86,16 +78,26 @@ namespace Creatures.Player
 
             if (Bridge.platform.id == PlatformId.Yandex)
             {
-                string jsonString = JsonUtility.ToJson(data);
-                SaveExtern(jsonString);
+                SaveOnStorage(JsonUtility.ToJson(data));
             }
         }
 
-        [DllImport("__Internal")]
-        private static extern void SaveExtern(string data);
+        private static void SaveOnStorage(string data)
+        {
+            Bridge.storage.Set(STORAGE_KEY, data);
+        }
 
-        [DllImport("__Internal")]
-        private static extern string LoadExtern();
+        public static void LoadFromStorage()
+        {
+            Bridge.storage.Get(STORAGE_KEY, OnStorageGetCompleted);
+        }
+
+        private static void OnStorageGetCompleted(bool sucess, string data)
+        {
+            if (!sucess)
+                return;
+            SaveData(JsonUtility.FromJson<PlayerData>(data));
+        }
 
         #endregion
 
