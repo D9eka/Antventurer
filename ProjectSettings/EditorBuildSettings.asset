@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Cemetery.unity
     guid: 3e6c13b02c499bc4394a43755247dbe2
   - enabled: 1
-    path: "Assets/Scenes/Wintering\u0421hamber.unity"
+    path: "Assets/Scenes/Hibernation\u0421hamber.unity"
     guid: 14b849f90d772cf4bb5557aac80a933c
   - enabled: 1
     path: Assets/Scenes/Cowshed.unity

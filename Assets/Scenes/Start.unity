@@ -14257,7 +14257,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _window: 1
   _mode: 0
-  _sceneName: "Wintering\u0421hamber"
+  _sceneName: "Hibernation\u0421hamber"
   _position: {x: -15, y: -1.75}
   _invertScale: 1
   _cleanPlayerPrefs: 0
@@ -14563,7 +14563,7 @@ MonoBehaviour:
   _window: 1
   _mode: 0
   _sceneName: Cowshed
-  _position: {x: -17.5, y: 0}
+  _position: {x: -14.25, y: -2}
   _invertScale: 0
   _cleanPlayerPrefs: 0
 --- !u!114 &1619427146

@@ -15,23 +15,30 @@ namespace Creatures.Enemy
         [SerializeField] private Animator _signAnimator;
         [SerializeField] private LayerCheck _canAttack;
         [Space]
-        [SerializeField] private float _maxPatrolDistance = 10f;
-        [Space]
         [SerializeField] private State _initialState = State.Patrolling;
+        [SerializeField] private float _defaultSpeed = 3f;
+        [Header("State: Patrolling")]
+        [SerializeField] private float _maxPatrolDistance = 10f;
         [Header("State: CheckTrace")]
         [SerializeField] private float _traceCheckingDelay = 2f;
+        [Header("State: FollowTheTrace")]
+        [SerializeField] private float _followTheTraceSpeed = 5f;
         [Header("State: AgroToPlayer")]
         [SerializeField] private float _alarmDelay = 0.5f;
         [Header("State: GoToPlayer")]
+        [SerializeField] private float _goToPlayerSpeed = 6f;
         [SerializeField] private float _missPlayerDelay = 5f;
         [SerializeField] private float _missPlayerCoolDown = 0.5f;
         [Header("State: Attack(Player)")]
         [SerializeField] private float _attackCoolDown = 1f;
         [Header("State: FollowThePlayer")]
+        [SerializeField] private float _followPlayerSpeed = 4.5f;
         [SerializeField] private float _minDistanceToPlayer = 1.5f;
         [SerializeField] private float _maxDistanceToPlayer = 3f;
         [Header("State: FindEnemy")]
         [SerializeField] private float _maxDistanceToEnemy = 10f;
+        [Header("State: GoToEnemy")]
+        [SerializeField] private float _goToEnemySpeed = 6f;
 
         private Coroutine _current;
         private float _missPlayerCounter;
@@ -60,6 +67,12 @@ namespace Creatures.Enemy
         private const string SUSPICION_SIGN_KEY = "suspicion-sign";
         private const string DETECTION_SIGN_KEY = "detection-sign";
         private const string RECRUITMENT_SIGN_KEY = "recruitment-sign";
+
+        private const float DEFAULT_SPEED = 3f;
+        private const float FOLLOW_SPEED = 4.5f;
+        private const float CHASING_SPEED = 6f;
+
+        public EventHandler<float> OnChangeSpeed;
 
         private void Start()
         {
@@ -101,7 +114,8 @@ namespace Creatures.Enemy
         {
             if(Enemies.TryFindNearestEnemy(transform, _maxDistanceToEnemy, out Transform nearestEnemy))
             { 
-
+                GoToEnemy(nearestEnemy);
+                _state = State.GoToEnemy;
             }
         }
 
@@ -166,6 +180,7 @@ namespace Creatures.Enemy
         private IEnumerator FollowTheTrace()
         {
             _navigation.followEnabled = false;
+            OnChangeSpeed?.Invoke(this, _followTheTraceSpeed);
             while (TraceController.Instance.IsOnTrace(_enemy.transform.position) && 
                   TraceController.Instance.IsTraceActual(_enemy.transform.position) &&
                   _navigation.GetDistanceToNearestPoint() < _maxPatrolDistance)
@@ -189,6 +204,7 @@ namespace Creatures.Enemy
 
         private IEnumerator GoToPlayer()
         {
+            OnChangeSpeed?.Invoke(this, _goToPlayerSpeed);
             _missPlayerCounter = _missPlayerDelay;
             while (_vision.IsTouchingLayer || _missPlayerCounter > 0)
             {
@@ -218,6 +234,7 @@ namespace Creatures.Enemy
 
         private IEnumerator FollowThePlayer()
         { 
+            OnChangeSpeed?.Invoke(this, _followPlayerSpeed);
             while (enabled)
             {
                 if(Vector2.Distance(transform.position, PlayerController.Instance.transform.position) > _maxDistanceToPlayer)
@@ -232,6 +249,7 @@ namespace Creatures.Enemy
         private IEnumerator GoToEnemy(Transform enemy)
         {
             _navigation.SetTarget(enemy.position, true);
+            OnChangeSpeed?.Invoke(this, _goToEnemySpeed);
             _navigation.followEnabled = true;
             while (enabled)
             {
@@ -260,6 +278,7 @@ namespace Creatures.Enemy
         {
             _state = state;
             _navigation.followEnabled = true;
+            OnChangeSpeed?.Invoke(this, _defaultSpeed);
             Debug.Log($"Change state to {state}");
             _enemy.Stop();
 

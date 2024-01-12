@@ -27,6 +27,13 @@ namespace Creatures.Enemy
         private void Start()
         {
             Enemies.AddEnemy(transform);
+            if (TryGetComponent(out EnemyAI ai))
+                ai.OnChangeSpeed += EnemyAI_OnChangeSpeed;
+        }
+
+        private void EnemyAI_OnChangeSpeed(object sender, float e)
+        {
+            _speed = e;
         }
 
         protected override void Update() 
@@ -36,7 +43,6 @@ namespace Creatures.Enemy
 
         public void Recruit()
         {
-            _visual.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 75);
             OnRecruited?.Invoke(this, EventArgs.Empty);
             IsRecruited = true;
         }
