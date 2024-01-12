@@ -24,6 +24,11 @@ namespace Creatures.Enemy
             base.Awake();
         }
 
+        private void Start()
+        {
+            Enemies.AddEnemy(transform);
+        }
+
         protected override void Update() 
         { 
             base.Update();

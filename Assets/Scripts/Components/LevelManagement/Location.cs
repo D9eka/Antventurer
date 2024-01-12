@@ -1,4 +1,5 @@
 using Components.Audio;
+using Creatures.Enemy;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class Location : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        Enemies.CleanEnemiesList();
     }
 
     private void Start()
